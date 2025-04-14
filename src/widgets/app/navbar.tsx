@@ -1,22 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import NextLink from "next/link";
 import Link from "next/link";
 import {
   Box,
   Flex,
-  Text,
   IconButton,
-  Link as ChakraLink,
+  // Link as ChakraLink,
+  Container,
 } from "@chakra-ui/react";
-import { FaHamburger, FaTimes } from "react-icons/fa";
+import {} from "react-icons/fa";
+import { useFirebaseUser } from "@/context/firebase";
+import { FaHamburger, FaTimes, FaUser, FaShoppingCart } from "react-icons/fa";
 import Image from "next/image";
 import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import AppCta from "./cta";
 
 export const navLinks = [
-  { name: "Cards", link: "/cards" },
+  { name: "GOE", link: "/cards" },
   { name: "Refill", link: "/refill" },
   { name: "Transfers", link: "/international-transfer" },
   { name: "Vault", link: "/vault" },
@@ -29,44 +30,52 @@ export const navLinks = [
 
 const NavMenu = ({ close }: { close: () => void }) => {
   return (
-    <Flex direction={{ base: "column", lg: "row" }} gap={5}>
-      {navLinks.map(({ name, link }) => (
-        <NextLink key={link} href={link} passHref>
-          <ChakraLink
-            onClick={close}
-            fontSize="sm"
-            fontWeight="medium"
-            color="gray.700"
-            _hover={{ color: "purple.500" }}
-          >
-            {name}
-          </ChakraLink>
-        </NextLink>
-      ))}
-    </Flex>
+    <Container
+      maxW="7xl"
+      className="flex items-center justify-between py-4 gap-5"
+    >
+      <p onClick={close} className="text-[#D2AC71]">
+        GOE
+      </p>
+      <p onClick={close} className="text-white">
+        <span className="text-[#D2AC71]">Egy</span>Book
+      </p>
+      <p onClick={close} className="text-white">
+        <span className="text-[#D2AC71]">Egy</span>Explore
+      </p>
+      <p onClick={close} className="text-white">
+        <span className="text-[#D2AC71]">Egy</span>Token
+      </p>
+      <p onClick={close} className="text-white">
+        <span className="text-[#D2AC71]">Egy</span>Treasure
+      </p>
+    </Container>
   );
 };
 
-const NavCta = () => <AppCta text="Get started" />;
+const NavCta = () => {
+  const user = useFirebaseUser();
 
-const NavAppToggle = () => (
-  <Flex>
-    <Link href="/">
-      <Box px={4} py={2} shadow="md">
-        <Text fontWeight="semibold" fontSize="sm">
-          Personal
-        </Text>
+  if (user) {
+    return (
+      <Box className="flex gap-4 items-center">
+        <IconButton aria-label="Cart" variant="ghost" color="white">
+          <FaShoppingCart />
+        </IconButton>
+        <IconButton aria-label="User" variant="ghost" color="white">
+          <FaUser />
+        </IconButton>
       </Box>
-    </Link>
-    <Link href="/business">
-      <Box px={4} py={2} shadow="md">
-        <Text fontWeight="semibold" fontSize="sm" color="blackAlpha.800">
-          Business
-        </Text>
-      </Box>
-    </Link>
-  </Flex>
-);
+    );
+  }
+
+  return (
+    <Box className="flex gap-3">
+      <AppCta text="Login" />
+      <AppCta text="Sign up" />
+    </Box>
+  );
+};
 
 const AppNavBar = () => {
   const isTabletAndBelow = useMediaQuery(MediaQueryBreakPoints.tabletAndBelow);
@@ -78,7 +87,7 @@ const AppNavBar = () => {
       position="sticky"
       top="0"
       zIndex="500"
-      bg="white"
+      bg="black"
       shadow="sm"
     >
       <Flex
@@ -92,7 +101,6 @@ const AppNavBar = () => {
           <Link href="/">
             <Image src="/logo.png" width={100} height={100} alt="GOE Logo" />
           </Link>
-          {!isTabletAndBelow && <NavAppToggle />}
         </Flex>
 
         {isTabletAndBelow ? (
@@ -106,6 +114,7 @@ const AppNavBar = () => {
         ) : (
           <Flex gap={5} align="center">
             <NavMenu close={() => {}} />
+            <p className="text-white font-normal text-xl">EN</p>
             <NavCta />
           </Flex>
         )}
@@ -117,7 +126,7 @@ const AppNavBar = () => {
           top="0"
           zIndex="500"
           w="full"
-          bg="white"
+          bg="black"
           px={4}
           py={5}
         >
@@ -131,10 +140,6 @@ const AppNavBar = () => {
               <FaTimes />
             </IconButton>
           </Flex>
-
-          <Box mt={4}>
-            <NavAppToggle />
-          </Box>
 
           <Box mt={4}>
             <NavMenu close={() => setMobileNavOpen(false)} />
