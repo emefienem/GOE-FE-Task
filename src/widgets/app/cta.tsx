@@ -4,19 +4,20 @@ import { Button } from "@chakra-ui/react";
 
 interface AppCtaProps {
   text: string;
-  outline?: boolean;
+  bgColor: string;
+  onClick?: () => void;
 }
 
-const AppCta = ({ text, outline }: AppCtaProps) => {
+const AppCta = ({ text, bgColor, onClick }: AppCtaProps) => {
   // const strokeColor = outline ? "#ffd700" : "#fff";
 
   return (
     <Button
       as="a"
-      variant={outline ? "outline" : "solid"}
+      onClick={onClick}
+      variant="solid"
       colorScheme="#D2AC71"
-      bg="#D2AC71"
-      borderWidth={outline ? "2px" : undefined}
+      bg={bgColor}
       gap={2}
       px={6}
       py={4}

@@ -18,11 +18,9 @@ const LazyHomeTrendingSection = React.lazy(
 const LazyHomeAdventureSection = React.lazy(
   () => import("@/widgets/pages/home/adventure-section")
 );
-const LazyHomeLifestyleSection = React.lazy(
-  () => import("@/widgets/pages/home/lifestyle-section")
-);
+
 export const metadata: Metadata = {
-  title: "GOE",
+  title: "Home",
   description:
     "Global money transfers, secure savings, bill payments, defi deposits, and swaps; physical and virtual cards; a multicurrency wallet; gift cards; tuition fee payments; a vault for saving in Pounds, Dollars, and Naira; flight bookings; and lifestyle services such as booking lounges, stays, and vacations.",
   keywords:
@@ -38,8 +36,6 @@ export default function Home() {
       <LazyHomeWhyChooseSection />
       <LazyHomeTrendingSection />
       <LazyHomeAdventureSection />
-      {/*<LazyHomeLifestyleSection />
-      <LazyHomeTuitionSection /> */}
     </main>
   );
 }

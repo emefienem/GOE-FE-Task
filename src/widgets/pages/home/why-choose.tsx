@@ -1,16 +1,14 @@
 "use client";
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { Box, Container, Heading, Text, Flex } from "@chakra-ui/react";
-import { FaCreditCard, FaVrCardboard, FaTag } from "react-icons/fa";
 import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import useAnimation from "@/hooks/use-animation";
 import { useEffect, useRef } from "react";
 import FeatureCard from "@/widgets/app/feature-card";
+import gsap from "gsap";
 
 const HomeWhyChooseSection = () => {
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
-
   const sectionRef = useRef(null);
   const { animate } = useAnimation();
 
@@ -26,10 +24,10 @@ const HomeWhyChooseSection = () => {
         },
       });
     }
-  }, []);
+  }, [animate]);
 
   return (
-    <Box as="section" py={5} bg="black" ref={sectionRef}>
+    <Box px={{ base: 5, md: 20 }} py={5} bg="black" ref={sectionRef}>
       <Container maxW="7xl">
         <Text
           fontSize={{ base: "2xl", md: "4xl" }}
@@ -47,16 +45,11 @@ const HomeWhyChooseSection = () => {
         <Box
           display="grid"
           gridTemplateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }}
-          gap={8}
-          overflowX={isMobile ? "auto" : "unset"}
-          whiteSpace={isMobile ? "nowrap" : "normal"}
-          css={css`
-            &::-webkit-scrollbar {
-              display: none;
-            }
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-          `}
+          gap={{ base: 6, md: 8 }}
+          // Remove horizontal overflow settings for a cleaner mobile appearance
+          // css={css`
+          //   /* Optional: remove scrollbar styling if not needed */
+          // `}
         >
           <FeatureCard
             title={
@@ -78,8 +71,8 @@ const HomeWhyChooseSection = () => {
               </>
             }
             description="Quick, user-friendly platform that simplifies the reservation process."
-            icon={<FaCreditCard />}
-            iconColor="#346D52"
+            imageSrc="/why-seamless.png"
+            imageAlt="Seamless & Smart Booking"
           />
           <FeatureCard
             title={
@@ -93,9 +86,9 @@ const HomeWhyChooseSection = () => {
                 </Text>
               </>
             }
-            description="Explore hotels and rooms in 360 before you book--giving you total confidence."
-            icon={<FaVrCardboard />}
-            iconColor="#346D52"
+            description="Explore hotels and rooms in 360 before you book—giving you total confidence."
+            imageSrc="/why-vr.png"
+            imageAlt="Immersive VR Preview"
           />
           <FeatureCard
             title={
@@ -110,8 +103,8 @@ const HomeWhyChooseSection = () => {
               </>
             }
             description="Save more with special offers and real-time price comparisons."
-            icon={<FaTag />}
-            iconColor="#346D52"
+            imageSrc="/why-exclusive.png"
+            imageAlt="Exclusive Best-Price"
           />
         </Box>
       </Container>

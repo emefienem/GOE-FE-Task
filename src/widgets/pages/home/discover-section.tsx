@@ -7,6 +7,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import useAnimation from "@/hooks/use-animation";
 import NewPlace from "@/widgets/app/new-place";
+import gsap from "gsap";
 
 const HomeDiscoverSection = () => {
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
@@ -59,7 +60,7 @@ const HomeDiscoverSection = () => {
         ref={scrollRef}
         overflowX="auto"
         gap={8}
-        px={4}
+        // px={4}
         css={css`
           &::-webkit-scrollbar {
             display: none;

@@ -35,7 +35,7 @@ const HomeTrendingSection = () => {
   return (
     <Box
       py={10}
-      px={{ base: 4, md: 12 }}
+      px={{ base: 5, md: 20 }}
       bg="black"
       color="white"
       ref={sectionRef}

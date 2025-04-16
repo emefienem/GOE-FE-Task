@@ -1,152 +1,310 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import {
   Box,
   Flex,
+  Text,
+  Icon,
+  Input,
+  InputGroup,
   IconButton,
-  // Link as ChakraLink,
-  Container,
 } from "@chakra-ui/react";
-import {} from "react-icons/fa";
+import {
+  FaSearch,
+  FaUserCircle,
+  FaGlobe,
+  FaHeart,
+  FaBell,
+  FaShoppingCart,
+  FaMapMarkerAlt,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import { useFirebaseUser } from "@/context/firebase";
-import { FaHamburger, FaTimes, FaUser, FaShoppingCart } from "react-icons/fa";
+import { loginWithGoogle } from "@/utils/firebaseAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "@/configs/firebaseConfig";
+import { useState } from "react";
 import Image from "next/image";
-import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import AppCta from "./cta";
+import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
+import { InputLeftElement } from "@chakra-ui/input";
 
-export const navLinks = [
-  { name: "GOE", link: "/cards" },
-  { name: "Refill", link: "/refill" },
-  { name: "Transfers", link: "/international-transfer" },
-  { name: "Vault", link: "/vault" },
-  { name: "Lifestyle", link: "/lifestyle" },
-  { name: "Tuition", link: "/tuition" },
-  { name: "Swap", link: "/swap" },
-  { name: "OTC", link: "/otc" },
-  { name: "Referral", link: "/referral" },
-];
-
-const NavMenu = ({ close }: { close: () => void }) => {
-  return (
-    <Container
-      maxW="7xl"
-      className="flex items-center justify-between py-4 gap-5"
-    >
-      <p onClick={close} className="text-[#D2AC71]">
-        GOE
-      </p>
-      <p onClick={close} className="text-white">
-        <span className="text-[#D2AC71]">Egy</span>Book
-      </p>
-      <p onClick={close} className="text-white">
-        <span className="text-[#D2AC71]">Egy</span>Explore
-      </p>
-      <p onClick={close} className="text-white">
-        <span className="text-[#D2AC71]">Egy</span>Token
-      </p>
-      <p onClick={close} className="text-white">
-        <span className="text-[#D2AC71]">Egy</span>Treasure
-      </p>
-    </Container>
-  );
-};
-
-const NavCta = () => {
+const AppNavbar = () => {
   const user = useFirebaseUser();
-
-  if (user) {
-    return (
-      <Box className="flex gap-4 items-center">
-        <IconButton aria-label="Cart" variant="ghost" color="white">
-          <FaShoppingCart />
-        </IconButton>
-        <IconButton aria-label="User" variant="ghost" color="white">
-          <FaUser />
-        </IconButton>
-      </Box>
-    );
-  }
-
-  return (
-    <Box className="flex gap-3">
-      <AppCta text="Login" />
-      <AppCta text="Sign up" />
-    </Box>
-  );
-};
-
-const AppNavBar = () => {
-  const isTabletAndBelow = useMediaQuery(MediaQueryBreakPoints.tabletAndBelow);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
+
+  const navLinks = ["GOE", "EgyBook", "EgyExplore", "EgyTales", "EgyTreasure"];
+  const cities = ["Cairo", "Alexandria", "Hurghada"];
+
+  const handleSearchIconClick = () => {
+    // Open the search overlay when the search icon is clicked
+    setSearchOverlayOpen(true);
+  };
 
   return (
-    <Box
-      as="header"
-      position="sticky"
-      top="0"
-      zIndex="500"
-      bg="black"
-      shadow="sm"
-    >
+    <Box bg="black" color="white" position="relative">
+      {/* Top Navbar */}
       <Flex
-        align="center"
         justify="space-between"
-        h={{ base: "16", md: "20" }}
-        w={{ base: "90%", xl: "83%" }}
-        mx="auto"
+        align="center"
+        px={{ base: 4, sm: 6, md: 10, lg: 20 }}
+        py={4}
+        borderBottom="1px solid #222"
       >
-        <Flex align="center" gap={6} w="full">
-          <Link href="/">
-            <Image src="/logo.png" width={100} height={100} alt="GOE Logo" />
-          </Link>
+        {/* Logo */}
+        <Box boxSize={{ base: "60px", md: "100px" }}>
+          <Image
+            src="/logo.png"
+            alt="GOE Logo"
+            width={100}
+            height={100}
+            style={{ objectFit: "contain" }}
+          />
+        </Box>
+
+        {/* Middle Nav (Desktop only) */}
+        <Flex
+          gap={6}
+          fontSize="sm"
+          align="center"
+          display={!isMobile ? "flex" : "none"}
+        >
+          {navLinks.map((link) => (
+            <Text
+              key={link}
+              _hover={{ color: "#CBAA7E", cursor: "pointer" }}
+              onClick={undefined} // No action here since search is triggered by icon
+            >
+              {link}
+            </Text>
+          ))}
         </Flex>
 
-        {isTabletAndBelow ? (
+        {/* Right side icons/buttons (Desktop) */}
+        <Flex gap={3} align="center" display={!isMobile ? "flex" : "none"}>
           <IconButton
-            aria-label="Open Menu"
+            aria-label="Search"
             variant="ghost"
-            onClick={() => setMobileNavOpen(true)}
+            onClick={handleSearchIconClick}
           >
-            <FaHamburger />
+            <FaSearch />
           </IconButton>
-        ) : (
-          <Flex gap={5} align="center">
-            <NavMenu close={() => {}} />
-            <p className="text-white font-normal text-xl">EN</p>
-            <NavCta />
+          <Icon as={FaGlobe} />
+          <Text fontSize="sm">EN</Text>
+
+          {!user ? (
+            <>
+              <AppCta
+                text="Login"
+                onClick={loginWithGoogle}
+                bgColor="#D2AC71"
+              />
+              <AppCta
+                text="Sign up"
+                onClick={loginWithGoogle}
+                bgColor="#D2AC71"
+              />
+            </>
+          ) : (
+            <>
+              <IconButton aria-label="Cart" variant="outline">
+                <FaShoppingCart />
+              </IconButton>
+              <IconButton aria-label="Favorites" variant="outline">
+                <FaHeart />
+              </IconButton>
+              <IconButton aria-label="Notifications" variant="outline">
+                <FaBell />
+              </IconButton>
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  variant="outline"
+                  aria-label="User Menu"
+                >
+                  <FaUserCircle />
+                </MenuButton>
+                <MenuList bg="#1A1A1A" color="white">
+                  <MenuItem>My profile</MenuItem>
+                  <MenuItem>Saved bundles</MenuItem>
+                  <MenuItem>Invite friends</MenuItem>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem onClick={() => signOut(auth)} color="red">
+                    Log out
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </>
+          )}
+        </Flex>
+
+        {/* Mobile Hamburger & Search Icons */}
+        {isMobile && (
+          <Flex align="center">
+            {/* Mobile Search Icon */}
+            <IconButton
+              aria-label="Search"
+              variant="ghost"
+              onClick={handleSearchIconClick}
+              mr={2}
+            >
+              <FaSearch />
+            </IconButton>
+            <IconButton
+              aria-label="Toggle Mobile Menu"
+              onClick={() => setMobileNavOpen((prev) => !prev)}
+              variant="outline"
+            >
+              {mobileNavOpen ? <FaTimes /> : <FaBars />}
+            </IconButton>
           </Flex>
         )}
       </Flex>
 
-      {isTabletAndBelow && mobileNavOpen && (
-        <Box
-          position="fixed"
-          top="0"
-          zIndex="500"
-          w="full"
-          bg="black"
-          px={4}
-          py={5}
-        >
-          <Flex justify="space-between" align="center">
-            <Image src="/logo.png" width={100} height={100} alt="GOE Logo" />
-            <IconButton
-              aria-label="Close Menu"
-              variant="ghost"
+      {/* Mobile Nav Dropdown */}
+      {isMobile && mobileNavOpen && (
+        <Box px={5} py={4} bg="black" display="flex" flexDirection="column">
+          {navLinks.map((link) => (
+            <Text
+              key={link}
+              py={2}
+              _hover={{ color: "#CBAA7E", cursor: "pointer" }}
               onClick={() => setMobileNavOpen(false)}
             >
-              <FaTimes />
-            </IconButton>
-          </Flex>
-
+              {link}
+            </Text>
+          ))}
           <Box mt={4}>
-            <NavMenu close={() => setMobileNavOpen(false)} />
+            {!user ? (
+              <Flex gap={3}>
+                <AppCta
+                  text="Login"
+                  onClick={loginWithGoogle}
+                  bgColor="#D2AC71"
+                />
+                <AppCta
+                  text="Sign up"
+                  onClick={loginWithGoogle}
+                  bgColor="#D2AC71"
+                />
+              </Flex>
+            ) : (
+              <>
+                <Flex gap={3} mb={2}>
+                  <IconButton aria-label="Cart" variant="outline">
+                    <FaShoppingCart />
+                  </IconButton>
+                  <IconButton aria-label="Favorites" variant="outline">
+                    <FaHeart />
+                  </IconButton>
+                  <IconButton aria-label="Notifications" variant="outline">
+                    <FaBell />
+                  </IconButton>
+                </Flex>
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    variant="outline"
+                    aria-label="User Menu"
+                    w="full"
+                  >
+                    <FaUserCircle />
+                  </MenuButton>
+                  <MenuList bg="#1A1A1A" color="white">
+                    <MenuItem>My profile</MenuItem>
+                    <MenuItem>Saved bundles</MenuItem>
+                    <MenuItem>Invite friends</MenuItem>
+                    <MenuItem>Settings</MenuItem>
+                    <MenuItem onClick={() => signOut(auth)} color="red">
+                      Log out
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </>
+            )}
           </Box>
+        </Box>
+      )}
 
-          <Box mt={4}>
-            <NavCta />
+      {/* Search Overlay */}
+      {searchOverlayOpen && (
+        <Box
+          position="absolute"
+          top="100%"
+          left={0}
+          w="100%"
+          h="100vh"
+          bg="rgba(0, 0, 0, 0.85)"
+          zIndex={10}
+          p={10}
+        >
+          {/* Close button for search overlay */}
+          <IconButton
+            aria-label="Close Search"
+            variant="ghost"
+            color="#D2AC71"
+            position="absolute"
+            top="20px"
+            right="20px"
+            onClick={() => setSearchOverlayOpen(false)}
+          >
+            <FaTimes />
+          </IconButton>
+
+          <Box maxW="500px" mx="auto" mt={20}>
+            <InputGroup mb={6}>
+              {/* <InputLeftElement pointerEvents="none">
+                <FaSearch color="gray.300" />
+              </InputLeftElement>  */}
+              <Input
+                placeholder="Search"
+                bg="#1E1E1E"
+                border="none"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                _placeholder={{ color: "gray.400" }}
+              />
+            </InputGroup>
+
+            <Box bg="#1E1E1E" borderRadius="md" p={4}>
+              {searchTerm === "" ? (
+                <>
+                  <Text mb={4}>Most popular</Text>
+                  {cities.map((city) => (
+                    <Flex key={city} align="center" mb={3} gap={3}>
+                      <Icon as={FaMapMarkerAlt} />
+                      <Box>
+                        <Text fontWeight="bold">{city}</Text>
+                        <Text fontSize="sm" color="gray.400">
+                          City in Egypt
+                        </Text>
+                      </Box>
+                    </Flex>
+                  ))}
+                </>
+              ) : (
+                <>
+                  <Text mb={4}>Search Result</Text>
+                  <Flex align="center" gap={3}>
+                    <Icon as={FaMapMarkerAlt} />
+                    <Box>
+                      <Text fontWeight="bold">{searchTerm}</Text>
+                      <Text fontSize="sm" color="gray.400">
+                        Location
+                      </Text>
+                    </Box>
+                  </Flex>
+                </>
+              )}
+              <Text mt={4} color="gray.400" fontSize="sm">
+                See all results for "{searchTerm || "Search"}"
+              </Text>
+            </Box>
           </Box>
         </Box>
       )}
@@ -154,4 +312,4 @@ const AppNavBar = () => {
   );
 };
 
-export default AppNavBar;
+export default AppNavbar;

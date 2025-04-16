@@ -16,6 +16,7 @@ import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import { useEffect, useRef } from "react";
 import useAnimation from "@/hooks/use-animation";
 import { hotelData } from "@/hooks/data";
+import gsap from "gsap";
 
 const HomeMostRelevantSection = () => {
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
@@ -48,7 +49,13 @@ const HomeMostRelevantSection = () => {
   }, []);
 
   return (
-    <Box bg="black" py={8} px={{ base: 5, md: 20 }} ref={sectionRef}>
+    <Box
+      bg="black"
+      py={8}
+      px={{ base: 5, md: 20 }}
+      ref={sectionRef}
+      position="relative"
+    >
       <Heading
         color="white"
         mb={6}
@@ -142,13 +149,12 @@ const HomeMostRelevantSection = () => {
           ))}
         </Flex>
 
-        {/* Navigation Arrows - Only show on non-mobile */}
         {!isMobile && (
           <>
             <IconButton
               aria-label="Scroll Left"
               position="absolute"
-              left="-0"
+              left="0"
               top="30%"
               bg="white"
               boxShadow="md"

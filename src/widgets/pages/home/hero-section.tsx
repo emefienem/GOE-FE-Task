@@ -3,13 +3,13 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Box, Heading, Text } from "@chakra-ui/react";
-import BookingBar from "./booking-bar";
+import BookingBar from "../../app/booking-bar";
 import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import { MdNavigation } from "react-icons/md";
 import gsap from "gsap";
 import useAnimation from "@/hooks/use-animation";
 
-export default function HomeHeroSection() {
+const HomeHeroSection = () => {
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
   const isTablet = useMediaQuery(MediaQueryBreakPoints.tablet);
   const isDesktop = useMediaQuery(MediaQueryBreakPoints.desktop);
@@ -97,4 +97,6 @@ export default function HomeHeroSection() {
       </Box>
     </Box>
   );
-}
+};
+
+export default HomeHeroSection;
