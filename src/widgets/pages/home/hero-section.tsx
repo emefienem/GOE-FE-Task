@@ -12,7 +12,6 @@ import useAnimation from "@/hooks/use-animation";
 const HomeHeroSection = () => {
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
   const isTablet = useMediaQuery(MediaQueryBreakPoints.tablet);
-  const isDesktop = useMediaQuery(MediaQueryBreakPoints.desktop);
 
   const heroHeight = isMobile ? "400px" : isTablet ? "500px" : "500px";
   const sectionRef = useRef(null);

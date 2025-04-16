@@ -7,9 +7,7 @@ import {
   Text,
   VStack,
   HStack,
-  Stack,
   chakra,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   Popover,

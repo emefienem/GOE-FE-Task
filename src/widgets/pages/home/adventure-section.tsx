@@ -1,4 +1,3 @@
-import AppCta from "@/widgets/app/cta";
 import { Box, Button, Flex, Image, Text, VStack } from "@chakra-ui/react";
 
 const HomeAdventureSection = () => {

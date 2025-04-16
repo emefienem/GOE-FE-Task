@@ -29,7 +29,6 @@ import Image from "next/image";
 import AppCta from "./cta";
 import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
-import { InputLeftElement } from "@chakra-ui/input";
 
 const AppNavbar = () => {
   const user = useFirebaseUser();
@@ -231,7 +230,6 @@ const AppNavbar = () => {
         </Box>
       )}
 
-      {/* Search Overlay */}
       {searchOverlayOpen && (
         <Box
           position="absolute"
@@ -243,7 +241,6 @@ const AppNavbar = () => {
           zIndex={10}
           p={10}
         >
-          {/* Close button for search overlay */}
           <IconButton
             aria-label="Close Search"
             variant="ghost"
@@ -302,7 +299,7 @@ const AppNavbar = () => {
                 </>
               )}
               <Text mt={4} color="gray.400" fontSize="sm">
-                See all results for "{searchTerm || "Search"}"
+                See all results for &quot;{searchTerm || "Search"}&quot;
               </Text>
             </Box>
           </Box>

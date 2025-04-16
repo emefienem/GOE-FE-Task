@@ -1,14 +1,12 @@
 "use client";
 /** @jsxImportSource @emotion/react */
-import { Box, Container, Heading, Text, Flex } from "@chakra-ui/react";
-import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
+import { Box, Container, Text } from "@chakra-ui/react";
 import useAnimation from "@/hooks/use-animation";
 import { useEffect, useRef } from "react";
 import FeatureCard from "@/widgets/app/feature-card";
 import gsap from "gsap";
 
 const HomeWhyChooseSection = () => {
-  const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
   const sectionRef = useRef(null);
   const { animate } = useAnimation();
 

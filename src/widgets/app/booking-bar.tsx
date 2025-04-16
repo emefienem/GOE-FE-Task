@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text, Button } from "@chakra-ui/react";
+import { Flex, Icon, Text, Button } from "@chakra-ui/react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { BsCalendar2Date } from "react-icons/bs";
 

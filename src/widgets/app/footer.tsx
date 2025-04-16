@@ -2,11 +2,9 @@ import {
   Box,
   Flex,
   Text,
-  Button,
   Link,
   HStack,
   VStack,
-  Icon,
   IconButton,
 } from "@chakra-ui/react";
 import Image from "next/image";
