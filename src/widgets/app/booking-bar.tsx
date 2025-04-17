@@ -106,7 +106,7 @@ const BookingBar = () => {
             borderRadius="full"
             _hover={{ bg: "green.600" }}
             fontWeight="semibold"
-            ml={{ md: 6, lg: 10 }}
+            ml={{ md: 3, lg: 6 }}
           >
             Explore Stays
           </Button>
