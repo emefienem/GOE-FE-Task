@@ -1,429 +1,4 @@
 // "use client";
-
-// import {
-//   Box,
-//   Grid,
-//   Button,
-//   Text,
-//   VStack,
-//   HStack,
-//   chakra,
-// } from "@chakra-ui/react";
-// import {
-//   Popover,
-//   PopoverTrigger,
-//   PopoverContent,
-//   PopoverArrow,
-//   PopoverBody,
-// } from "@chakra-ui/react";
-// import { useNumberInput } from "@ark-ui/react";
-// import { JSX, useState } from "react";
-// import { DayPicker, DateRange } from "react-day-picker";
-// import { format } from "date-fns";
-// import "react-day-picker/dist/style.css";
-
-// const locations = [
-//   "Cairo, Egypt",
-//   "Hurghada, Egypt",
-//   "Sharm El-Sheikh, Egypt",
-//   "Luxor & Aswan, Egypt",
-// ];
-
-// const LabelValueBox = ({ label, value }: { label: string; value: string }) => (
-//   <VStack align="flex-start" gap={1}>
-//     <Text fontSize="sm" color="gray.500">
-//       {label}
-//     </Text>
-//     <Text fontWeight="medium">{value}</Text>
-//   </VStack>
-// );
-
-// export default function Home(): JSX.Element {
-//   const [selectedLocation, setSelectedLocation] = useState("Cairo, Egypt");
-//   const [selectedRange, setSelectedRange] = useState<DateRange>();
-//   const [adults, setAdults] = useState(2);
-//   const [children, setChildren] = useState(1);
-//   const [rooms, setRooms] = useState(1);
-
-//   const totalLabel = `${adults} Adult${
-//     adults !== 1 ? "s" : ""
-//   }, ${children} Child$${children !== 1 ? "ren" : ""}, ${rooms} Room${
-//     rooms !== 1 ? "s" : ""
-//   }`;
-
-//   const formattedDate =
-//     selectedRange?.from && selectedRange?.to
-//       ? `${format(selectedRange.from, "dd MMM")} - ${format(
-//           selectedRange.to,
-//           "dd MMM"
-//         )}`
-//       : "Select dates";
-
-//   return (
-//     <Box px={[4, 8]} py={12} bg="gray.100" minH="100vh">
-//       <Box
-//         bg="white"
-//         borderRadius="2xl"
-//         boxShadow="lg"
-//         px={[4, 6]}
-//         py={[6, 8]}
-//         maxW="6xl"
-//         mx="auto"
-//       >
-//         <Grid
-//           templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }}
-//           gap={6}
-//           alignItems="center"
-//         >
-//           <Popover.Root>
-//             <PopoverTrigger>
-//               <Box cursor="pointer">
-//                 <LabelValueBox
-//                   label="Where are you going?"
-//                   value={selectedLocation}
-//                 />
-//               </Box>
-//             </PopoverTrigger>
-//             <PopoverContent w="xs">
-//               <PopoverArrow />
-//               <PopoverBody>
-//                 <VStack align="stretch">
-//                   {locations.map((loc) => (
-//                     <Button
-//                       key={loc}
-//                       variant="ghost"
-//                       justifyContent="flex-start"
-//                       onClick={() => setSelectedLocation(loc)}
-//                     >
-//                       {loc}
-//                     </Button>
-//                   ))}
-//                 </VStack>
-//               </PopoverBody>
-//             </PopoverContent>
-//           </Popover.Root>
-
-//           <Popover.Root>
-//             <PopoverTrigger>
-//               <Box cursor="pointer">
-//                 <LabelValueBox label="Check in - out" value={formattedDate} />
-//               </Box>
-//             </PopoverTrigger>
-//             <PopoverContent w="fit-content">
-//               <PopoverArrow />
-//               <PopoverBody>
-//                 <DayPicker
-//                   mode="range"
-//                   selected={selectedRange}
-//                   onSelect={setSelectedRange}
-//                   numberOfMonths={2}
-//                   pagedNavigation
-//                 />
-//               </PopoverBody>
-//             </PopoverContent>
-//           </Popover.Root>
-
-//           <Popover.Root>
-//             <PopoverTrigger>
-//               <Box cursor="pointer">
-//                 <LabelValueBox label="Guests & Rooms" value={totalLabel} />
-//               </Box>
-//             </PopoverTrigger>
-//             <PopoverContent>
-//               <PopoverArrow />
-//               <PopoverBody>
-//                 <VStack gap={4}>
-//                   <Counter
-//                     label="Adults"
-//                     value={adults}
-//                     onChange={setAdults}
-//                     min={1}
-//                   />
-//                   <Counter
-//                     label="Children"
-//                     value={children}
-//                     onChange={setChildren}
-//                     min={0}
-//                   />
-//                   <Counter
-//                     label="Rooms"
-//                     value={rooms}
-//                     onChange={setRooms}
-//                     min={1}
-//                   />
-//                 </VStack>
-//               </PopoverBody>
-//             </PopoverContent>
-//           </Popover.Root>
-
-//           <Button colorScheme="green" size="lg" rounded="full" w="full">
-//             Search
-//           </Button>
-//         </Grid>
-//       </Box>
-//     </Box>
-//   );
-// }
-
-// const Counter = ({
-//   label,
-//   value,
-//   onChange,
-//   min,
-// }: {
-//   label: string;
-//   value: number;
-//   onChange: (value: number) => void;
-//   min: number;
-// }) => {
-//   const numberInput = useNumberInput({
-//     value: value.toString(),
-//     min,
-//     onValueChange: (details) => onChange(details.valueAsNumber),
-//   });
-
-//   return (
-//     <HStack justify="space-between" w="full">
-//       <Text>{label}</Text>
-//       <chakra.div {...numberInput.getRootProps()} display="flex" gap={2}>
-//         <chakra.button
-//           {...numberInput.getDecrementTriggerProps()}
-//           px={2}
-//           bg="gray.100"
-//           borderRadius="full"
-//           fontWeight="bold"
-//         >
-//           -
-//         </chakra.button>
-//         <chakra.input
-//           {...numberInput.getInputProps()}
-//           textAlign="center"
-//           width="40px"
-//           borderRadius="md"
-//           bg="gray.50"
-//         />
-//         <chakra.button
-//           {...numberInput.getIncrementTriggerProps()}
-//           px={2}
-//           bg="gray.100"
-//           borderRadius="full"
-//           fontWeight="bold"
-//         >
-//           +
-//         </chakra.button>
-//       </chakra.div>
-//     </HStack>
-//   );
-// };
-
-// "use client";
-// import { useState } from "react";
-// import {
-//   Box,
-//   Button,
-//   Flex,
-//   Text,
-//   VStack,
-//   HStack,
-//   NumberInput,
-// } from "@chakra-ui/react";
-// import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-// import { createListCollection, Select } from "@ark-ui/react";
-
-// const locations = ["Cairo", "Hurghada", "Sharm El-Sheikh", "Luxor & Aswan"];
-
-// const LocationPicker = ({
-//   location,
-//   setLocation,
-// }: {
-//   location: string;
-//   setLocation: (loc: string) => void;
-// }) => {
-//   const items = locations.map((loc) => ({ label: loc, value: loc }));
-
-//   const collection = createListCollection({ items });
-
-//   return (
-//     <Select.Root
-//       value={[location]}
-//       onValueChange={(e) => setLocation(e.value[0])}
-//       collection={collection}
-//       positioning={{ sameWidth: true }}
-//     >
-//       <Select.Label>
-//         <Text mb={2}>Location</Text>
-//       </Select.Label>
-//       <Select.Control>
-//         <Select.Trigger />
-//       </Select.Control>
-//       <Select.Positioner>
-//         <Select.Content>
-//           {items.map((item) => (
-//             <Select.Item key={item.value} item={item}>
-//               <Select.ItemText>{item.label}</Select.ItemText>
-//             </Select.Item>
-//           ))}
-//         </Select.Content>
-//       </Select.Positioner>
-//     </Select.Root>
-//   );
-// };
-
-// const DateCell = ({
-//   date,
-//   selected,
-//   onClick,
-// }: {
-//   date: string;
-//   selected: boolean;
-//   onClick: () => void;
-// }) => (
-//   <Box
-//     w={"32px"}
-//     h={"32px"}
-//     display="flex"
-//     alignItems="center"
-//     justifyContent="center"
-//     borderRadius="md"
-//     bg={selected ? "yellow.400" : "transparent"}
-//     _hover={{ bg: "gray.600", cursor: "pointer" }}
-//     onClick={onClick}
-//   >
-//     <Text>{date}</Text>
-//   </Box>
-// );
-
-// const DatePicker = ({
-//   selectedDates,
-//   setSelectedDates,
-// }: {
-//   selectedDates: string[];
-//   setSelectedDates: (d: string[]) => void;
-// }) => {
-//   const dates = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
-
-//   const toggleDate = (date: string) => {
-//     (setSelectedDates as React.Dispatch<React.SetStateAction<string[]>>)(
-//       (prev) =>
-//         prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date]
-//     );
-//   };
-
-//   return (
-//     <Box bg="gray.800" p={4} borderRadius="lg" color="white">
-//       <HStack justifyContent="space-between" mb={2}>
-//         <HiChevronLeft size={6} />
-//         <Text>February 2025</Text>
-//         <HiChevronRight size={6} />
-//       </HStack>
-//       <Flex wrap="wrap" gap={1}>
-//         {dates.map((date) => (
-//           <DateCell
-//             key={date}
-//             date={date}
-//             selected={selectedDates.includes(date)}
-//             onClick={() => toggleDate(date)}
-//           />
-//         ))}
-//       </Flex>
-//     </Box>
-//   );
-// };
-
-// type PeopleRoomPickerProps = {
-//   adults: number;
-//   setAdults: React.Dispatch<React.SetStateAction<number>>;
-//   numChildren: number;
-//   setNumChildren: React.Dispatch<React.SetStateAction<number>>;
-//   rooms: number;
-//   setRooms: React.Dispatch<React.SetStateAction<number>>;
-// };
-
-// const PeopleRoomPicker = ({
-//   adults,
-//   setAdults,
-//   numChildren,
-//   setNumChildren,
-//   rooms,
-//   setRooms,
-// }: PeopleRoomPickerProps) => (
-//   <VStack bg="gray.700" p={4} borderRadius="lg" gap={4} color="white">
-//     {[
-//       { label: "Adults", value: adults, setValue: setAdults },
-//       { label: "Children", value: numChildren, setValue: setNumChildren },
-//       { label: "Rooms", value: rooms, setValue: setRooms },
-//     ].map(({ label, value, setValue }) => (
-//       <HStack key={label} justifyContent="space-between" w="100%">
-//         <Text>{label}</Text>
-//         <NumberInput.Root
-//           min={0}
-//           value={value.toString()}
-//           onValueChange={(details) => {
-//             const num = Number(details.value);
-//             if (!isNaN(num)) {
-//               setValue(num);
-//             }
-//           }}
-//           w="80px"
-//         >
-//           <NumberInput.Control>
-//             <NumberInput.Input bg="gray.600" color="white" />
-//           </NumberInput.Control>
-//         </NumberInput.Root>
-//       </HStack>
-//     ))}
-//   </VStack>
-// );
-
-// export default function EgyBookPicker() {
-//   const [location, setLocation] = useState(locations[0]);
-//   const [selectedDates, setSelectedDates] = useState<string[]>([]);
-//   const [adults, setAdults] = useState(2);
-//   const [numChildren, setNumChildren] = useState(1);
-//   const [rooms, setRooms] = useState(1);
-
-//   return (
-//     <VStack
-//       gap={6}
-//       p={6}
-//       bg="gray.900"
-//       minH="100vh"
-//       align="start"
-//       color="white"
-//     >
-//       <Box>
-//         <Text mb={2}>Location</Text>
-//         <LocationPicker location={location} setLocation={setLocation} />
-//       </Box>
-
-//       <Box>
-//         <Text mb={2}>Select Dates</Text>
-//         <DatePicker
-//           selectedDates={selectedDates}
-//           setSelectedDates={setSelectedDates}
-//         />
-//       </Box>
-
-//       <Box>
-//         <Text mb={2}>Guests</Text>
-//         <PeopleRoomPicker
-//           adults={adults}
-//           setAdults={setAdults}
-//           numChildren={numChildren}
-//           setNumChildren={setNumChildren}
-//           rooms={rooms}
-//           setRooms={setRooms}
-//         />
-//       </Box>
-
-//       <Button bg="green.500" _hover={{ bg: "green.600" }}>
-//         Explore Stays
-//       </Button>
-//     </VStack>
-//   );
-// }
-
-// "use client";
 // import { useState } from "react";
 // import {
 //   Box,
@@ -475,10 +50,9 @@
 //       justify="space-between"
 //     >
 //       {/* Location Picker */}
-
-//       <Popover.Root>
+//       <Popover.Root positioning={{ placement: "bottom-start" }}>
 //         <PopoverTrigger>
-//           <Button variant="ghost">
+//           <Button variant="ghost" color="white">
 //             <FiChevronDown />
 //             <Icon as={FiMapPin} /> {selectedLocation}
 //           </Button>
@@ -493,11 +67,9 @@
 //                   py={2}
 //                   borderRadius="md"
 //                   _hover={{ bg: "gray.600", cursor: "pointer" }}
-//                   onClick={() => {
-//                     setSelectedLocation(loc);
-//                   }}
+//                   onClick={() => setSelectedLocation(loc)}
 //                 >
-//                   <Text>{loc}</Text>
+//                   <Text color="white">{loc}</Text>
 //                 </Box>
 //               ))}
 //             </VStack>
@@ -506,13 +78,20 @@
 //       </Popover.Root>
 
 //       {/* Date Picker */}
-//       <Popover.Root open={dateOpen} onOpenChange={openDate}>
+//       <Popover.Root
+//         open={dateOpen}
+//         onOpenChange={openDate}
+//         positioning={{ placement: "bottom-start" }}
+//       >
 //         <PopoverTrigger>
-//           <Button variant="ghost" colorScheme="whiteAlpha">
+//           <Button variant="ghost" color="white">
 //             <FiChevronDown />
 //             <HStack gap={2}>
 //               <Icon as={FiCalendar} />
-//               <Text>{`${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`}</Text>
+//               <Text color="white">
+//                 {startDate.toLocaleDateString()} -{" "}
+//                 {endDate.toLocaleDateString()}
+//               </Text>
 //             </HStack>
 //           </Button>
 //         </PopoverTrigger>
@@ -524,7 +103,6 @@
 //             </Text>
 //           </PopoverHeader>
 //           <PopoverBody>
-//             {/* Two months calendar grid placeholder */}
 //             <Flex justify="space-between">
 //               <Calendar monthOffset={0} />
 //               <Calendar monthOffset={1} />
@@ -536,15 +114,17 @@
 //       {/* Guests & Rooms Picker */}
 //       <Popover.Root
 //         open={guestOpen}
-//         // onOpen={openGuest}
 //         onOpenChange={openGuest}
+//         positioning={{ placement: "bottom-start" }}
 //       >
 //         <PopoverTrigger>
-//           <Button variant="ghost" colorScheme="whiteAlpha">
+//           <Button variant="ghost" color="white">
 //             <FiChevronDown />
 //             <HStack gap={2}>
 //               <Icon as={FiUsers} />
-//               <Text>{`${adults} Adults, ${children} Children, ${rooms} Room`}</Text>
+//               <Text color="white">
+//                 {adults} Adults, {children} Children, {rooms} Room
+//               </Text>
 //             </HStack>
 //           </Button>
 //         </PopoverTrigger>
@@ -557,69 +137,24 @@
 //           </PopoverHeader>
 //           <PopoverBody>
 //             <VStack gap={4} align="stretch">
-//               {/** Adults **/}
-//               <Flex justify="space-between" align="center">
-//                 <Text>Adults</Text>
-//                 <HStack>
-//                   <Button
-//                     size="sm"
-//                     onClick={() => setAdults((a) => Math.max(0, a - 1))}
-//                     gap={0}
-//                   >
-//                     <FiMinus />
-//                   </Button>
-//                   <Text>{adults}</Text>
-//                   <Button
-//                     size="sm"
-//                     onClick={() => setAdults((a) => a + 1)}
-//                     gap={0}
-//                   >
-//                     <FiPlus />
-//                   </Button>
-//                 </HStack>
-//               </Flex>
-//               {/** Children **/}
-//               <Flex justify="space-between" align="center">
-//                 <Text>Children</Text>
-//                 <HStack>
-//                   <Button
-//                     size="sm"
-//                     onClick={() => setChildren((c) => Math.max(0, c - 1))}
-//                     gap={0}
-//                   >
-//                     <FiMinus />
-//                   </Button>
-//                   <Text>{children}</Text>
-//                   <Button
-//                     size="sm"
-//                     onClick={() => setChildren((c) => c + 1)}
-//                     gap={0}
-//                   >
-//                     <FiPlus />
-//                   </Button>
-//                 </HStack>
-//               </Flex>
-//               {/** Rooms **/}
-//               <Flex justify="space-between" align="center">
-//                 <Text>Rooms</Text>
-//                 <HStack>
-//                   <Button
-//                     size="sm"
-//                     onClick={() => setRooms((r) => Math.max(1, r - 1))}
-//                     gap={0}
-//                   >
-//                     <FiMinus />
-//                   </Button>
-//                   <Text>{rooms}</Text>
-//                   <Button
-//                     size="sm"
-//                     onClick={() => setRooms((r) => r + 1)}
-//                     gap={0}
-//                   >
-//                     <FiPlus />
-//                   </Button>
-//                 </HStack>
-//               </Flex>
+//               <CountControl
+//                 label="Adults"
+//                 value={adults}
+//                 onChange={setAdults}
+//                 min={0}
+//               />
+//               <CountControl
+//                 label="Children"
+//                 value={children}
+//                 onChange={setChildren}
+//                 min={0}
+//               />
+//               <CountControl
+//                 label="Rooms"
+//                 value={rooms}
+//                 onChange={setRooms}
+//                 min={1}
+//               />
 //             </VStack>
 //           </PopoverBody>
 //         </PopoverContent>
@@ -629,6 +164,37 @@
 //       <Button colorScheme="green" ml={4} px={6}>
 //         Explore Stays
 //       </Button>
+//     </Flex>
+//   );
+// }
+
+// function CountControl({
+//   label,
+//   value,
+//   onChange,
+//   min = 0,
+// }: {
+//   label: string;
+//   value: number;
+//   onChange: (v: number) => void;
+//   min?: number;
+// }) {
+//   return (
+//     <Flex justify="space-between" align="center">
+//       <Text color="white">{label}</Text>
+//       <HStack>
+//         <Button
+//           size="sm"
+//           onClick={() => onChange(Math.max(min, value - 1))}
+//           color="white"
+//         >
+//           <Icon as={FiMinus} />
+//         </Button>
+//         <Text color="white">{value}</Text>
+//         <Button size="sm" onClick={() => onChange(value + 1)} color="white">
+//           <Icon as={FiPlus} />
+//         </Button>
+//       </HStack>
 //     </Flex>
 //   );
 // }
@@ -656,24 +222,27 @@
 
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import {
-  Box,
   Flex,
-  Button,
   Icon,
+  Text,
+  Button,
+  Box,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
   PopoverHeader,
   PopoverBody,
-  Text,
   HStack,
   VStack,
   Grid,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FiMapPin, FiCalendar, FiUsers } from "react-icons/fi";
+import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
+import { BsCalendar2Date } from "react-icons/bs";
+import { MdOutlineHorizontalRule } from "react-icons/md";
 import { FiChevronDown, FiPlus, FiMinus } from "react-icons/fi";
 
 const locations = [
@@ -683,139 +252,333 @@ const locations = [
   "Luxor & Aswan",
 ];
 
-export default function Home() {
+export default function BookingBar() {
   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
-  const { open: dateOpen, onOpen: openDate } = useDisclosure();
-  const { open: guestOpen, onOpen: openGuest } = useDisclosure();
-
-  // Date state
-  const [startDate] = useState(new Date());
-  const [endDate] = useState(new Date(Date.now() + 86400000));
-
-  // Guests/rooms state
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(
+    new Date(Date.now() + 8 * 24 * 3600000)
+  );
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(1);
   const [rooms, setRooms] = useState(1);
 
+  const dateDisc = useDisclosure();
+  const guestDisc = useDisclosure();
+
+  const formatDate = (date: Date) =>
+    date.toLocaleDateString(undefined, {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+
   return (
     <Flex
-      p={4}
-      bg="gray.800"
-      borderRadius="xl"
+      bg="rgba(255, 255, 255, 0.1)"
+      backdropFilter="blur(10px)"
+      borderRadius="full"
+      p="4"
+      px="6"
       align="center"
       justify="space-between"
+      maxW={{ base: "95%", sm: "90%", md: "container.lg", lg: "container.xl" }}
+      mx="auto"
+      mt={{ base: "8", md: "6" }}
+      boxShadow="md"
+      gap={4}
+      flexDir={{ base: "column", md: "row" }}
     >
-      {/* Location Picker */}
-      <Popover.Root>
-        <PopoverTrigger>
-          <Button variant="ghost" color="white">
-            <FiChevronDown />
-            <Icon as={FiMapPin} /> {selectedLocation}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent bg="gray.700" borderColor="gray.600">
-          <PopoverBody>
-            <VStack gap={1} align="stretch">
-              {locations.map((loc) => (
-                <Box
-                  key={loc}
-                  px={3}
-                  py={2}
-                  borderRadius="md"
-                  _hover={{ bg: "gray.600", cursor: "pointer" }}
-                  onClick={() => setSelectedLocation(loc)}
-                >
-                  <Text color="white">{loc}</Text>
-                </Box>
-              ))}
-            </VStack>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover.Root>
+      {/* Small screen */}
+      <Box display={{ base: "block", md: "none" }} w="100%">
+        <Flex wrap="wrap" align="center" justify="center" gap={2}>
+          {/* Location Popover */}
+          <Popover.Root positioning={{ placement: "bottom-start" }}>
+            <PopoverTrigger>
+              <Button as="span" variant="ghost" color="whiteAlpha.900">
+                <FiChevronDown />
+                <Icon as={FaMapMarkerAlt} color="#D2AC71" mr={2} />
+                <Text as="span">{selectedLocation}</Text>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.700" borderColor="gray.600">
+              <PopoverArrow />
+              <PopoverBody p={0}>
+                <VStack gap={0} align="stretch">
+                  {locations.map((loc) => (
+                    <Box
+                      key={loc}
+                      px={4}
+                      py={2}
+                      _hover={{ bg: "gray.600", cursor: "pointer" }}
+                      onClick={() => setSelectedLocation(loc)}
+                    >
+                      <Text color="white">{loc}</Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover.Root>
 
-      {/* Date Picker */}
-      <Popover.Root open={dateOpen} onOpenChange={openDate}>
-        <PopoverTrigger>
-          <Button variant="ghost" color="white">
-            <FiChevronDown />
-            <HStack gap={2}>
-              <Icon as={FiCalendar} />
-              <Text color="white">
-                {startDate.toLocaleDateString()} -{" "}
-                {endDate.toLocaleDateString()}
-              </Text>
-            </HStack>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent bg="gray.700" borderColor="gray.600" w="600px">
-          <PopoverArrow />
-          <PopoverHeader>
-            <Text fontWeight="bold" color="white">
-              Select dates
-            </Text>
-          </PopoverHeader>
-          <PopoverBody>
-            <Flex justify="space-between">
-              <Calendar monthOffset={0} />
-              <Calendar monthOffset={1} />
-            </Flex>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover.Root>
+          <Icon as={MdOutlineHorizontalRule} color="whiteAlpha.700" />
 
-      {/* Guests & Rooms Picker */}
-      <Popover.Root open={guestOpen} onOpenChange={openGuest}>
-        <PopoverTrigger>
-          <Button variant="ghost" color="white">
-            <FiChevronDown />
-            <HStack gap={2}>
-              <Icon as={FiUsers} />
-              <Text color="white">
-                {adults} Adults, {children} Children, {rooms} Room
-              </Text>
-            </HStack>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent bg="gray.700" borderColor="gray.600">
-          <PopoverArrow />
-          <PopoverHeader>
-            <Text fontWeight="bold" color="white">
-              Guests and Rooms
-            </Text>
-          </PopoverHeader>
-          <PopoverBody>
-            <VStack gap={4} align="stretch">
-              <CountControl
-                label="Adults"
-                value={adults}
-                onChange={setAdults}
-                min={0}
-              />
-              <CountControl
-                label="Children"
-                value={children}
-                onChange={setChildren}
-                min={0}
-              />
-              <CountControl
-                label="Rooms"
-                value={rooms}
-                onChange={setRooms}
-                min={1}
-              />
-            </VStack>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover.Root>
+          {/* Date Popover */}
+          <Popover.Root
+            positioning={{ placement: "bottom-start" }}
+            open={dateDisc.open}
+            onOpenChange={dateDisc.onOpen}
+            closeOnInteractOutside
+          >
+            <PopoverTrigger>
+              <Button variant="ghost" color="whiteAlpha.900">
+                <FiChevronDown />
+                <Icon as={BsCalendar2Date} color="#D2AC71" mr={2} />
+                <Text as="span">
+                  {formatDate(startDate)} - {formatDate(endDate)}
+                </Text>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.700" borderColor="gray.600" w="300px">
+              <PopoverArrow />
+              <PopoverHeader>
+                <Text color="white">Select dates</Text>
+              </PopoverHeader>
+              <PopoverBody>
+                <Flex justify="space-between">
+                  <Calendar
+                    monthOffset={0}
+                    selectRange={{
+                      startDate,
+                      endDate,
+                      setStartDate,
+                      setEndDate,
+                    }}
+                  />
+                  <Calendar
+                    monthOffset={1}
+                    selectRange={{
+                      startDate,
+                      endDate,
+                      setStartDate,
+                      setEndDate,
+                    }}
+                  />
+                </Flex>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover.Root>
+        </Flex>
 
-      {/* Explore Button */}
-      <Button colorScheme="green" ml={4} px={6}>
-        Explore Stays
-      </Button>
+        <Flex mt={2} align="center" justify="center">
+          {/* Guests Popover */}
+          <Popover.Root
+            positioning={{ placement: "bottom-end" }}
+            open={guestDisc.open}
+            onOpenChange={guestDisc.onOpen}
+            closeOnInteractOutside
+          >
+            <PopoverTrigger>
+              <Button variant="ghost" color="whiteAlpha.900">
+                <FiChevronDown />
+                <Icon as={FaUser} color="#D2AC71" mr={2} />
+                <Text as="span">
+                  {adults} Adults, {children} Children, {rooms} Rooms
+                </Text>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.700" borderColor="gray.600">
+              <PopoverArrow />
+              <PopoverHeader>
+                <Text color="white">Guests & Rooms</Text>
+              </PopoverHeader>
+              <PopoverBody>
+                <VStack gap={3}>
+                  <CountControl
+                    label="Adults"
+                    value={adults}
+                    onChange={setAdults}
+                    min={0}
+                  />
+                  <CountControl
+                    label="Children"
+                    value={children}
+                    onChange={setChildren}
+                    min={0}
+                  />
+                  <CountControl
+                    label="Rooms"
+                    value={rooms}
+                    onChange={setRooms}
+                    min={1}
+                  />
+                </VStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover.Root>
+        </Flex>
+
+        <Button
+          bg="green.500"
+          color="white"
+          px="6"
+          py="4"
+          borderRadius="full"
+          _hover={{ bg: "green.600" }}
+          fontWeight="semibold"
+          w="100%"
+          mt={3}
+        >
+          Explore Stays
+        </Button>
+      </Box>
+
+      {/* Medium & Larger screens */}
+      <Flex
+        display={{ base: "none", md: "flex" }}
+        flex="1"
+        w="100%"
+        align="center"
+        justify="space-between"
+      >
+        <Flex align="center" gap={8}>
+          {/* Location */}
+          <Popover.Root positioning={{ placement: "bottom-end" }}>
+            <PopoverTrigger>
+              <Button as="span" variant="ghost" color="whiteAlpha.900">
+                <FiChevronDown />
+                <Icon as={FaMapMarkerAlt} color="#D2AC71" mr={2} />
+                <Text as="span">{selectedLocation}</Text>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.700" borderColor="gray.600">
+              <PopoverArrow />
+              <PopoverBody p={0}>
+                <VStack gap={0} align="stretch">
+                  {locations.map((loc) => (
+                    <Box
+                      key={loc}
+                      px={4}
+                      py={2}
+                      _hover={{ bg: "gray.600", cursor: "pointer" }}
+                      onClick={() => setSelectedLocation(loc)}
+                    >
+                      <Text color="white">{loc}</Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover.Root>
+
+          {/* Date */}
+          <Popover.Root
+            positioning={{ placement: "bottom-end" }}
+            open={dateDisc.open}
+            onOpenChange={dateDisc.onOpen}
+            closeOnInteractOutside
+          >
+            <PopoverTrigger>
+              <Button variant="ghost" color="whiteAlpha.900">
+                <FiChevronDown />
+                <Icon as={BsCalendar2Date} color="#D2AC71" mr={2} />
+                <Text>
+                  {formatDate(startDate)} - {formatDate(endDate)}
+                </Text>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.700" borderColor="gray.600" w="500px">
+              <PopoverArrow />
+              <PopoverHeader>
+                <Text color="white">Select dates</Text>
+              </PopoverHeader>
+              <PopoverBody>
+                <Flex justify="space-between">
+                  <Calendar
+                    monthOffset={0}
+                    selectRange={{
+                      startDate,
+                      endDate,
+                      setStartDate,
+                      setEndDate,
+                    }}
+                  />
+                  <Calendar
+                    monthOffset={1}
+                    selectRange={{
+                      startDate,
+                      endDate,
+                      setStartDate,
+                      setEndDate,
+                    }}
+                  />
+                </Flex>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover.Root>
+
+          {/* Guests */}
+          <Popover.Root
+            positioning={{ placement: "bottom-end" }}
+            open={guestDisc.open}
+            onOpenChange={guestDisc.onOpen}
+            closeOnInteractOutside
+          >
+            <PopoverTrigger>
+              <Button variant="ghost" color="whiteAlpha.900">
+                <FiChevronDown />
+                <Icon as={FaUser} color="#D2AC71" mr={2} />
+                <Text>
+                  {adults} Adults, {children} Children, {rooms} Rooms
+                </Text>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.700" borderColor="gray.600">
+              <PopoverArrow />
+              <PopoverHeader>
+                <Text color="white">Guests & Rooms</Text>
+              </PopoverHeader>
+              <PopoverBody>
+                <VStack gap={3}>
+                  <CountControl
+                    label="Adults"
+                    value={adults}
+                    onChange={setAdults}
+                    min={0}
+                  />
+                  <CountControl
+                    label="Children"
+                    value={children}
+                    onChange={setChildren}
+                    min={0}
+                  />
+                  <CountControl
+                    label="Rooms"
+                    value={rooms}
+                    onChange={setRooms}
+                    min={1}
+                  />
+                </VStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover.Root>
+        </Flex>
+
+        <Button
+          bg="green.500"
+          color="white"
+          px="6"
+          py="4"
+          borderRadius="full"
+          _hover={{ bg: "green.600" }}
+          fontWeight="semibold"
+          ml={{ md: 3, lg: 6 }}
+        >
+          Explore Stays
+        </Button>
+      </Flex>
     </Flex>
   );
 }
-
 function CountControl({
   label,
   value,
@@ -828,7 +591,7 @@ function CountControl({
   min?: number;
 }) {
   return (
-    <Flex justify="space-between" align="center">
+    <Flex justify="space-between" align="center" w="full">
       <Text color="white">{label}</Text>
       <HStack>
         <Button
@@ -847,23 +610,70 @@ function CountControl({
   );
 }
 
-function Calendar({ monthOffset }: { monthOffset: 0 | 1 }) {
-  const monthNames = ["February 2025", "March 2025"];
+function Calendar({
+  monthOffset,
+  selectRange,
+}: {
+  monthOffset: 0 | 1;
+  selectRange: {
+    startDate: Date;
+    endDate: Date;
+    setStartDate: (d: Date) => void;
+    setEndDate: (d: Date) => void;
+  };
+}) {
+  // Simplified calendar: clickable days
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + monthOffset;
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const cells = [] as React.ReactNode[];
+  for (let i = 0; i < firstDay; i++) cells.push(<Box key={`empty-${i}`} />);
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(year, month, d);
+    const isSelected =
+      date >= selectRange.startDate && date <= selectRange.endDate;
+    cells.push(
+      <Box
+        key={d}
+        h="32px"
+        w="32px"
+        lineHeight="32px"
+        textAlign="center"
+        borderRadius="md"
+        bg={isSelected ? "green.500" : "gray.600"}
+        color={isSelected ? "white" : "gray.300"}
+        cursor="pointer"
+        onClick={() => {
+          // simple range selection: set start if before start, else end
+          if (date < selectRange.startDate) selectRange.setStartDate(date);
+          else selectRange.setEndDate(date);
+        }}
+      >
+        {d}
+      </Box>
+    );
+  }
+
   return (
-    <Box>
-      <Text mb={2} fontWeight="bold" color="white">
-        {monthNames[monthOffset]}
+    <VStack align="stretch" gap={2}>
+      <Text fontWeight="bold" color="white">
+        {today.toLocaleString(undefined, {
+          month: "long",
+          year: "numeric",
+          timeZone: "UTC",
+        })}
       </Text>
       <Grid templateColumns="repeat(7, 1fr)" gap={1}>
         {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
-          <Text key={d} textAlign="center" fontSize="sm" color="gray.300">
+          <Text key={d} textAlign="center" fontSize="xs" color="gray.300">
             {d}
           </Text>
         ))}
-        {Array.from({ length: 30 }).map((_, i) => (
-          <Box key={i} h="32px" w="32px" bg="gray.600" borderRadius="md" />
-        ))}
+        {cells}
       </Grid>
-    </Box>
+    </VStack>
   );
 }
