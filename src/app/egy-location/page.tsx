@@ -326,7 +326,7 @@ export default function BookingBar() {
             positioning={{ placement: "bottom-start" }}
             open={dateDisc.open}
             onOpenChange={dateDisc.onOpen}
-            closeOnInteractOutside
+            closeOnInteractOutside={true}
           >
             <PopoverTrigger>
               <Button variant="ghost" color="whiteAlpha.900">
@@ -371,10 +371,10 @@ export default function BookingBar() {
         <Flex mt={2} align="center" justify="center">
           {/* Guests Popover */}
           <Popover.Root
-            positioning={{ placement: "bottom-end" }}
+            positioning={{ placement: "bottom-start" }}
             open={guestDisc.open}
             onOpenChange={guestDisc.onOpen}
-            closeOnInteractOutside
+            closeOnInteractOutside={true}
           >
             <PopoverTrigger>
               <Button variant="ghost" color="whiteAlpha.900">
@@ -441,7 +441,7 @@ export default function BookingBar() {
       >
         <Flex align="center" gap={8}>
           {/* Location */}
-          <Popover.Root positioning={{ placement: "bottom-end" }}>
+          <Popover.Root positioning={{ placement: "bottom-start" }}>
             <PopoverTrigger>
               <Button as="span" variant="ghost" color="whiteAlpha.900">
                 <FiChevronDown />
@@ -471,10 +471,10 @@ export default function BookingBar() {
 
           {/* Date */}
           <Popover.Root
-            positioning={{ placement: "bottom-end" }}
+            positioning={{ placement: "bottom-start" }}
             open={dateDisc.open}
             onOpenChange={dateDisc.onOpen}
-            closeOnInteractOutside
+            closeOnInteractOutside={true}
           >
             <PopoverTrigger>
               <Button variant="ghost" color="whiteAlpha.900">
@@ -517,10 +517,10 @@ export default function BookingBar() {
 
           {/* Guests */}
           <Popover.Root
-            positioning={{ placement: "bottom-end" }}
+            positioning={{ placement: "bottom-start" }}
             open={guestDisc.open}
             onOpenChange={guestDisc.onOpen}
-            closeOnInteractOutside
+            closeOnInteractOutside={true}
           >
             <PopoverTrigger>
               <Button variant="ghost" color="whiteAlpha.900">
