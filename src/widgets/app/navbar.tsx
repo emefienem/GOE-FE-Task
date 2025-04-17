@@ -14,7 +14,6 @@ import {
   FaUserCircle,
   FaGlobe,
   FaHeart,
-  FaBell,
   FaShoppingCart,
   FaMapMarkerAlt,
   FaBars,
