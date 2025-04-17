@@ -423,6 +423,237 @@
 //   );
 // }
 
+// "use client";
+// import { useState } from "react";
+// import {
+//   Box,
+//   Flex,
+//   Button,
+//   Icon,
+//   Popover,
+//   PopoverTrigger,
+//   PopoverContent,
+//   PopoverArrow,
+//   PopoverHeader,
+//   PopoverBody,
+//   Text,
+//   HStack,
+//   VStack,
+//   Grid,
+//   useDisclosure,
+// } from "@chakra-ui/react";
+// import { FiMapPin, FiCalendar, FiUsers } from "react-icons/fi";
+// import { FiChevronDown, FiPlus, FiMinus } from "react-icons/fi";
+
+// const locations = [
+//   "Cairo, Egypt",
+//   "Hurghada",
+//   "Sharm El-Sheikh",
+//   "Luxor & Aswan",
+// ];
+
+// export default function Home() {
+//   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
+//   const { open: dateOpen, onOpen: openDate } = useDisclosure();
+//   const { open: guestOpen, onOpen: openGuest } = useDisclosure();
+
+//   // Date state
+//   const [startDate] = useState(new Date());
+//   const [endDate] = useState(new Date(Date.now() + 86400000));
+
+//   // Guests/rooms state
+//   const [adults, setAdults] = useState(2);
+//   const [children, setChildren] = useState(1);
+//   const [rooms, setRooms] = useState(1);
+
+//   return (
+//     <Flex
+//       p={4}
+//       bg="gray.800"
+//       borderRadius="xl"
+//       align="center"
+//       justify="space-between"
+//     >
+//       {/* Location Picker */}
+
+//       <Popover.Root>
+//         <PopoverTrigger>
+//           <Button variant="ghost">
+//             <FiChevronDown />
+//             <Icon as={FiMapPin} /> {selectedLocation}
+//           </Button>
+//         </PopoverTrigger>
+//         <PopoverContent bg="gray.700" borderColor="gray.600">
+//           <PopoverBody>
+//             <VStack gap={1} align="stretch">
+//               {locations.map((loc) => (
+//                 <Box
+//                   key={loc}
+//                   px={3}
+//                   py={2}
+//                   borderRadius="md"
+//                   _hover={{ bg: "gray.600", cursor: "pointer" }}
+//                   onClick={() => {
+//                     setSelectedLocation(loc);
+//                   }}
+//                 >
+//                   <Text>{loc}</Text>
+//                 </Box>
+//               ))}
+//             </VStack>
+//           </PopoverBody>
+//         </PopoverContent>
+//       </Popover.Root>
+
+//       {/* Date Picker */}
+//       <Popover.Root open={dateOpen} onOpenChange={openDate}>
+//         <PopoverTrigger>
+//           <Button variant="ghost" colorScheme="whiteAlpha">
+//             <FiChevronDown />
+//             <HStack gap={2}>
+//               <Icon as={FiCalendar} />
+//               <Text>{`${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`}</Text>
+//             </HStack>
+//           </Button>
+//         </PopoverTrigger>
+//         <PopoverContent bg="gray.700" borderColor="gray.600" w="600px">
+//           <PopoverArrow />
+//           <PopoverHeader>
+//             <Text fontWeight="bold" color="white">
+//               Select dates
+//             </Text>
+//           </PopoverHeader>
+//           <PopoverBody>
+//             {/* Two months calendar grid placeholder */}
+//             <Flex justify="space-between">
+//               <Calendar monthOffset={0} />
+//               <Calendar monthOffset={1} />
+//             </Flex>
+//           </PopoverBody>
+//         </PopoverContent>
+//       </Popover.Root>
+
+//       {/* Guests & Rooms Picker */}
+//       <Popover.Root
+//         open={guestOpen}
+//         // onOpen={openGuest}
+//         onOpenChange={openGuest}
+//       >
+//         <PopoverTrigger>
+//           <Button variant="ghost" colorScheme="whiteAlpha">
+//             <FiChevronDown />
+//             <HStack gap={2}>
+//               <Icon as={FiUsers} />
+//               <Text>{`${adults} Adults, ${children} Children, ${rooms} Room`}</Text>
+//             </HStack>
+//           </Button>
+//         </PopoverTrigger>
+//         <PopoverContent bg="gray.700" borderColor="gray.600">
+//           <PopoverArrow />
+//           <PopoverHeader>
+//             <Text fontWeight="bold" color="white">
+//               Guests and Rooms
+//             </Text>
+//           </PopoverHeader>
+//           <PopoverBody>
+//             <VStack gap={4} align="stretch">
+//               {/** Adults **/}
+//               <Flex justify="space-between" align="center">
+//                 <Text>Adults</Text>
+//                 <HStack>
+//                   <Button
+//                     size="sm"
+//                     onClick={() => setAdults((a) => Math.max(0, a - 1))}
+//                     gap={0}
+//                   >
+//                     <FiMinus />
+//                   </Button>
+//                   <Text>{adults}</Text>
+//                   <Button
+//                     size="sm"
+//                     onClick={() => setAdults((a) => a + 1)}
+//                     gap={0}
+//                   >
+//                     <FiPlus />
+//                   </Button>
+//                 </HStack>
+//               </Flex>
+//               {/** Children **/}
+//               <Flex justify="space-between" align="center">
+//                 <Text>Children</Text>
+//                 <HStack>
+//                   <Button
+//                     size="sm"
+//                     onClick={() => setChildren((c) => Math.max(0, c - 1))}
+//                     gap={0}
+//                   >
+//                     <FiMinus />
+//                   </Button>
+//                   <Text>{children}</Text>
+//                   <Button
+//                     size="sm"
+//                     onClick={() => setChildren((c) => c + 1)}
+//                     gap={0}
+//                   >
+//                     <FiPlus />
+//                   </Button>
+//                 </HStack>
+//               </Flex>
+//               {/** Rooms **/}
+//               <Flex justify="space-between" align="center">
+//                 <Text>Rooms</Text>
+//                 <HStack>
+//                   <Button
+//                     size="sm"
+//                     onClick={() => setRooms((r) => Math.max(1, r - 1))}
+//                     gap={0}
+//                   >
+//                     <FiMinus />
+//                   </Button>
+//                   <Text>{rooms}</Text>
+//                   <Button
+//                     size="sm"
+//                     onClick={() => setRooms((r) => r + 1)}
+//                     gap={0}
+//                   >
+//                     <FiPlus />
+//                   </Button>
+//                 </HStack>
+//               </Flex>
+//             </VStack>
+//           </PopoverBody>
+//         </PopoverContent>
+//       </Popover.Root>
+
+//       {/* Explore Button */}
+//       <Button colorScheme="green" ml={4} px={6}>
+//         Explore Stays
+//       </Button>
+//     </Flex>
+//   );
+// }
+
+// function Calendar({ monthOffset }: { monthOffset: 0 | 1 }) {
+//   const monthNames = ["February 2025", "March 2025"];
+//   return (
+//     <Box>
+//       <Text mb={2} fontWeight="bold" color="white">
+//         {monthNames[monthOffset]}
+//       </Text>
+//       <Grid templateColumns="repeat(7, 1fr)" gap={1}>
+//         {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
+//           <Text key={d} textAlign="center" fontSize="sm" color="gray.300">
+//             {d}
+//           </Text>
+//         ))}
+//         {Array.from({ length: 30 }).map((_, i) => (
+//           <Box key={i} h="32px" w="32px" bg="gray.600" borderRadius="md" />
+//         ))}
+//       </Grid>
+//     </Box>
+//   );
+// }
+
 "use client";
 import { useState } from "react";
 import {
@@ -475,10 +706,9 @@ export default function Home() {
       justify="space-between"
     >
       {/* Location Picker */}
-
       <Popover.Root>
         <PopoverTrigger>
-          <Button variant="ghost">
+          <Button variant="ghost" color="white">
             <FiChevronDown />
             <Icon as={FiMapPin} /> {selectedLocation}
           </Button>
@@ -493,11 +723,9 @@ export default function Home() {
                   py={2}
                   borderRadius="md"
                   _hover={{ bg: "gray.600", cursor: "pointer" }}
-                  onClick={() => {
-                    setSelectedLocation(loc);
-                  }}
+                  onClick={() => setSelectedLocation(loc)}
                 >
-                  <Text>{loc}</Text>
+                  <Text color="white">{loc}</Text>
                 </Box>
               ))}
             </VStack>
@@ -508,11 +736,14 @@ export default function Home() {
       {/* Date Picker */}
       <Popover.Root open={dateOpen} onOpenChange={openDate}>
         <PopoverTrigger>
-          <Button variant="ghost" colorScheme="whiteAlpha">
+          <Button variant="ghost" color="white">
             <FiChevronDown />
             <HStack gap={2}>
               <Icon as={FiCalendar} />
-              <Text>{`${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`}</Text>
+              <Text color="white">
+                {startDate.toLocaleDateString()} -{" "}
+                {endDate.toLocaleDateString()}
+              </Text>
             </HStack>
           </Button>
         </PopoverTrigger>
@@ -524,7 +755,6 @@ export default function Home() {
             </Text>
           </PopoverHeader>
           <PopoverBody>
-            {/* Two months calendar grid placeholder */}
             <Flex justify="space-between">
               <Calendar monthOffset={0} />
               <Calendar monthOffset={1} />
@@ -534,17 +764,15 @@ export default function Home() {
       </Popover.Root>
 
       {/* Guests & Rooms Picker */}
-      <Popover.Root
-        open={guestOpen}
-        // onOpen={openGuest}
-        onOpenChange={openGuest}
-      >
+      <Popover.Root open={guestOpen} onOpenChange={openGuest}>
         <PopoverTrigger>
-          <Button variant="ghost" colorScheme="whiteAlpha">
+          <Button variant="ghost" color="white">
             <FiChevronDown />
             <HStack gap={2}>
               <Icon as={FiUsers} />
-              <Text>{`${adults} Adults, ${children} Children, ${rooms} Room`}</Text>
+              <Text color="white">
+                {adults} Adults, {children} Children, {rooms} Room
+              </Text>
             </HStack>
           </Button>
         </PopoverTrigger>
@@ -557,69 +785,24 @@ export default function Home() {
           </PopoverHeader>
           <PopoverBody>
             <VStack gap={4} align="stretch">
-              {/** Adults **/}
-              <Flex justify="space-between" align="center">
-                <Text>Adults</Text>
-                <HStack>
-                  <Button
-                    size="sm"
-                    onClick={() => setAdults((a) => Math.max(0, a - 1))}
-                    gap={0}
-                  >
-                    <FiMinus />
-                  </Button>
-                  <Text>{adults}</Text>
-                  <Button
-                    size="sm"
-                    onClick={() => setAdults((a) => a + 1)}
-                    gap={0}
-                  >
-                    <FiPlus />
-                  </Button>
-                </HStack>
-              </Flex>
-              {/** Children **/}
-              <Flex justify="space-between" align="center">
-                <Text>Children</Text>
-                <HStack>
-                  <Button
-                    size="sm"
-                    onClick={() => setChildren((c) => Math.max(0, c - 1))}
-                    gap={0}
-                  >
-                    <FiMinus />
-                  </Button>
-                  <Text>{children}</Text>
-                  <Button
-                    size="sm"
-                    onClick={() => setChildren((c) => c + 1)}
-                    gap={0}
-                  >
-                    <FiPlus />
-                  </Button>
-                </HStack>
-              </Flex>
-              {/** Rooms **/}
-              <Flex justify="space-between" align="center">
-                <Text>Rooms</Text>
-                <HStack>
-                  <Button
-                    size="sm"
-                    onClick={() => setRooms((r) => Math.max(1, r - 1))}
-                    gap={0}
-                  >
-                    <FiMinus />
-                  </Button>
-                  <Text>{rooms}</Text>
-                  <Button
-                    size="sm"
-                    onClick={() => setRooms((r) => r + 1)}
-                    gap={0}
-                  >
-                    <FiPlus />
-                  </Button>
-                </HStack>
-              </Flex>
+              <CountControl
+                label="Adults"
+                value={adults}
+                onChange={setAdults}
+                min={0}
+              />
+              <CountControl
+                label="Children"
+                value={children}
+                onChange={setChildren}
+                min={0}
+              />
+              <CountControl
+                label="Rooms"
+                value={rooms}
+                onChange={setRooms}
+                min={1}
+              />
             </VStack>
           </PopoverBody>
         </PopoverContent>
@@ -629,6 +812,37 @@ export default function Home() {
       <Button colorScheme="green" ml={4} px={6}>
         Explore Stays
       </Button>
+    </Flex>
+  );
+}
+
+function CountControl({
+  label,
+  value,
+  onChange,
+  min = 0,
+}: {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+}) {
+  return (
+    <Flex justify="space-between" align="center">
+      <Text color="white">{label}</Text>
+      <HStack>
+        <Button
+          size="sm"
+          onClick={() => onChange(Math.max(min, value - 1))}
+          color="white"
+        >
+          <Icon as={FiMinus} />
+        </Button>
+        <Text color="white">{value}</Text>
+        <Button size="sm" onClick={() => onChange(value + 1)} color="white">
+          <Icon as={FiPlus} />
+        </Button>
+      </HStack>
     </Flex>
   );
 }
