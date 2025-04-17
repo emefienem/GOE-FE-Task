@@ -130,7 +130,7 @@ const HomeMostRelevantSection = () => {
                 alt={hotel.name}
                 borderTopRadius="40px"
                 borderBottomRadius="40px"
-                w="100%"
+                w="450px"
                 h={{ base: "180px", sm: "220px", md: "300px" }}
                 objectFit="cover"
               />

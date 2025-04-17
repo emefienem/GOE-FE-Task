@@ -54,7 +54,7 @@ const AppNavbar = () => {
         py={4}
         borderBottom="1px solid #222"
       >
-        <Box boxSize={{ base: "60px", md: "100px" }}>
+        <Box boxSize={{ base: "60px", md: "100px" }} alignItems="center">
           <Image
             src="/logo.png"
             alt="GOE Logo"
