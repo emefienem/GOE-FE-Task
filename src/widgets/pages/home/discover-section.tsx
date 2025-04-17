@@ -82,8 +82,10 @@ const HomeDiscoverSection = () => {
           <IconButton
             aria-label="Scroll Left"
             position="absolute"
-            left="0"
-            top="45%"
+            // left="0"
+            // top="45%"
+            left="20px"
+            top="50%"
             zIndex={10}
             borderRadius="full"
             bg="white"
@@ -96,8 +98,10 @@ const HomeDiscoverSection = () => {
           <IconButton
             aria-label="Scroll Right"
             position="absolute"
-            right={0}
-            top="45%"
+            // right={0}
+            // top="45%"
+            right="20px"
+            top="50%"
             zIndex={10}
             borderRadius="full"
             bg="white"

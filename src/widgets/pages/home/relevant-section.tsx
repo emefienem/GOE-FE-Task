@@ -113,7 +113,8 @@ const HomeMostRelevantSection = () => {
                 px={4}
                 py={2}
                 borderRadius={50}
-                color="#346D52"
+                color="black"
+                bg="white"
               >
                 {hotel.location}
               </Badge>
@@ -162,8 +163,10 @@ const HomeMostRelevantSection = () => {
             <IconButton
               aria-label="Scroll Left"
               position="absolute"
-              left="0"
-              top="30%"
+              // left="0"
+              // top="30%"
+              left="20px" // or whatever consistent spacing fits your design
+              top="50%" // vertically centers the button
               bg="white"
               boxShadow="md"
               zIndex={10}
@@ -176,8 +179,10 @@ const HomeMostRelevantSection = () => {
             <IconButton
               aria-label="Scroll Right"
               position="absolute"
-              right="0"
-              top="30%"
+              // right="0"
+              // top="30%"
+              right="20px" // match the left spacing
+              top="50%"
               bg="white"
               boxShadow="md"
               zIndex={10}
