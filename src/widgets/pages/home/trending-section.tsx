@@ -80,7 +80,7 @@ const HomeTrendingSection = () => {
             transition="all 0.3s"
             _hover={{ transform: "scale(1.03)" }}
             minW={{ base: "220px", sm: "260px", md: "300px" }}
-            // maxW={{ base: "240px", sm: "280px", md: "300px" }}
+            maxW={{ base: "240px", sm: "280px", md: "300px" }}
             flexShrink={0}
           >
             <Image

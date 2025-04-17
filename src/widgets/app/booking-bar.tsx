@@ -1,6 +1,7 @@
 import { Flex, Icon, Text, Button } from "@chakra-ui/react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { BsCalendar2Date } from "react-icons/bs";
+import Link from "next/link";
 
 const BookingBar = () => {
   return (
@@ -65,20 +66,21 @@ const BookingBar = () => {
           </Text>
         </Flex>
       </Flex>
-
-      <Button
-        bg="green.500"
-        color="white"
-        px="6"
-        py="4"
-        borderRadius="full"
-        _hover={{ bg: "green.600" }}
-        fontWeight="semibold"
-        w={{ base: "100%", sm: "auto" }}
-        mt={{ base: 2, md: 0 }}
-      >
-        Explore Stays
-      </Button>
+      <Link href="/egy-location">
+        <Button
+          bg="green.500"
+          color="white"
+          px="6"
+          py="4"
+          borderRadius="full"
+          _hover={{ bg: "green.600" }}
+          fontWeight="semibold"
+          w={{ base: "100%", sm: "auto" }}
+          mt={{ base: 2, md: 0 }}
+        >
+          Explore Stays
+        </Button>
+      </Link>
     </Flex>
   );
 };

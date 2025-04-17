@@ -29,6 +29,7 @@ import Image from "next/image";
 import AppCta from "./cta";
 import useMediaQuery, { MediaQueryBreakPoints } from "@/hooks/use-media-query";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
+import Link from "next/link";
 
 const AppNavbar = () => {
   const user = useFirebaseUser();
@@ -41,7 +42,6 @@ const AppNavbar = () => {
   const cities = ["Cairo", "Alexandria", "Hurghada"];
 
   const handleSearchIconClick = () => {
-    // Open the search overlay when the search icon is clicked
     setSearchOverlayOpen(true);
   };
 
@@ -54,26 +54,30 @@ const AppNavbar = () => {
         py={4}
         borderBottom="1px solid #222"
       >
-        <Box boxSize={{ base: "60px", md: "100px" }} alignItems="center">
+        <Box boxSize={{ base: "100px", md: "100px" }} alignItems="center">
           {!isMobile ? (
             <Box boxSize={{ base: "60px", md: "100px" }}>
-              <Image
-                src="/logo.png"
-                alt="GOE Logo"
-                width={100}
-                height={100}
-                style={{ objectFit: "contain" }}
-              />
+              <Link href="/">
+                <Image
+                  src="/logo.png"
+                  alt="GOE Logo"
+                  width={100}
+                  height={100}
+                  style={{ objectFit: "contain" }}
+                />
+              </Link>
             </Box>
           ) : (
-            <Text fontWeight="bold" fontSize="xl">
-              <Box as="span" color="#D2AC71">
-                Egy
-              </Box>
-              <Box as="span" color="white">
-                Book
-              </Box>
-            </Text>
+            <Link href="/">
+              <Text fontWeight="bold" fontSize="xl">
+                <Box as="span" color="#D2AC71">
+                  Egy
+                </Box>
+                <Box as="span" color="white">
+                  Book
+                </Box>
+              </Text>
+            </Link>
           )}
         </Box>
 
@@ -161,14 +165,18 @@ const AppNavbar = () => {
               onClick={handleSearchIconClick}
               mr={2}
             >
-              <FaSearch />
+              <FaSearch color="#D2AC71" />
             </IconButton>
             <IconButton
               aria-label="Toggle Mobile Menu"
               onClick={() => setMobileNavOpen((prev) => !prev)}
-              variant="outline"
+              // variant="outline"
             >
-              {mobileNavOpen ? <FaTimes /> : <FaBars />}
+              {mobileNavOpen ? (
+                <FaTimes color="D2AC71" />
+              ) : (
+                <FaBars color="D2AC71" />
+              )}
             </IconButton>
           </Flex>
         )}
@@ -183,7 +191,7 @@ const AppNavbar = () => {
           </Flex>
           <Box mt={4}>
             {!user ? (
-              <Flex gap={2} flexDirection="column">
+              <>
                 <AppCta
                   text="Login"
                   onClick={loginWithGoogle}
@@ -194,7 +202,7 @@ const AppNavbar = () => {
                   onClick={loginWithGoogle}
                   bgColor="#D2AC71"
                 />
-              </Flex>
+              </>
             ) : (
               <>
                 <Flex gap={3} mb={2}>
@@ -229,17 +237,17 @@ const AppNavbar = () => {
                 </Menu>
               </>
             )}
-            <Image
-              src="/footer-logo.png"
-              alt="Navbar Logo"
-              width={100}
-              height={100}
-              style={{
-                alignItems: "center",
-                justifyItems: "center",
-                display: "flex",
-              }}
-            />
+            <Box display="flex" justifyContent="center" mt={6}>
+              <Image
+                src="/footer-logo.png"
+                alt="Navbar Logo"
+                width={100}
+                height={100}
+                style={{
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
           </Box>
         </Box>
       )}
