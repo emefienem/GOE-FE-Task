@@ -60,10 +60,10 @@ const AppNavbar = () => {
         py={4}
         borderBottom="1px solid #222"
       >
-        <Box boxSize={{ base: "100px", md: "100px" }} alignItems="center">
-          {!isMobile ? (
-            <Box boxSize={{ base: "60px", md: "100px" }}>
-              <Link href="/">
+        <Flex align="center">
+          <Link href="/">
+            {!isMobile ? (
+              <Box boxSize={{ base: "60px", md: "100px" }}>
                 <Image
                   src="/logo.png"
                   alt="GOE Logo"
@@ -71,11 +71,9 @@ const AppNavbar = () => {
                   height={100}
                   style={{ objectFit: "contain" }}
                 />
-              </Link>
-            </Box>
-          ) : (
-            <Link href="/">
-              <Text fontWeight="bold" fontSize="xl">
+              </Box>
+            ) : (
+              <Text fontWeight="bold" fontSize="xl" lineHeight="1">
                 <Box as="span" color="#D2AC71">
                   Egy
                 </Box>
@@ -83,9 +81,9 @@ const AppNavbar = () => {
                   Book
                 </Box>
               </Text>
-            </Link>
-          )}
-        </Box>
+            )}
+          </Link>
+        </Flex>
 
         {/* Middle Nav (Desktop only) */}
         <Flex

@@ -1,4 +1,4 @@
-import { Flex, Icon, Text, Button } from "@chakra-ui/react";
+import { Flex, Icon, Text, Button, Box, Stack } from "@chakra-ui/react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { BsCalendar2Date } from "react-icons/bs";
 import Link from "next/link";
@@ -20,18 +20,13 @@ const BookingBar = () => {
       gap={4}
       flexDir={{ base: "column", md: "row" }}
     >
-      <Flex
+      <Stack
         flex="1"
         w="100%"
         direction={{ base: "column", sm: "row" }}
-        align={{ base: "flex-start", sm: "center" }}
-        justifyContent={{
-          base: "flex-start",
-          sm: "space-between",
-          md: "flex-start",
-        }}
-        wrap="wrap"
-        gap={{ base: 3, sm: 6, md: 8 }}
+        gap={{ base: 4, sm: 6, md: 8 }}
+        align={{ base: "stretch", sm: "center" }}
+        justify="space-between"
       >
         <Flex align="center" gap="2">
           <Icon as={FaMapMarkerAlt} color="#D2AC71" />
@@ -65,22 +60,25 @@ const BookingBar = () => {
             2 Adults, 1 Child, 1 Infant
           </Text>
         </Flex>
-      </Flex>
-      <Link href="/egy-location">
-        <Button
-          bg="green.500"
-          color="white"
-          px="6"
-          py="4"
-          borderRadius="full"
-          _hover={{ bg: "green.600" }}
-          fontWeight="semibold"
-          w={{ base: "100%", sm: "auto" }}
-          mt={{ base: 2, md: 0 }}
-        >
-          Explore Stays
-        </Button>
-      </Link>
+      </Stack>
+
+      <Box w="full">
+        <Link href="/egy-location">
+          <Button
+            bg="green.500"
+            color="white"
+            px="6"
+            py="4"
+            borderRadius="full"
+            _hover={{ bg: "green.600" }}
+            fontWeight="semibold"
+            w="full"
+            mt={{ base: 2, md: 0 }}
+          >
+            Explore Stays
+          </Button>
+        </Link>
+      </Box>
     </Flex>
   );
 };
