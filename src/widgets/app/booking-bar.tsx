@@ -14,7 +14,8 @@ const BookingBar = () => {
       px="6"
       align="center"
       justify="space-between"
-      maxW="container.lg"
+      // maxW="container.lg"
+      maxW={{ base: "95%", sm: "90%", md: "container.lg", lg: "container.xl" }}
       mx="auto"
       mt={{ base: "8", md: "6" }}
       boxShadow="md"
@@ -105,6 +106,7 @@ const BookingBar = () => {
             borderRadius="full"
             _hover={{ bg: "green.600" }}
             fontWeight="semibold"
+            ml={{ md: 6, lg: 10 }}
           >
             Explore Stays
           </Button>
