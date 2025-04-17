@@ -134,24 +134,27 @@ const AppNavbar = () => {
             </>
           ) : (
             <>
-              <IconButton aria-label="Cart" variant="outline">
-                <FaShoppingCart />
-              </IconButton>
-              <IconButton aria-label="Favorites" variant="outline">
+              <IconButton aria-label="Favorites" color="white">
                 <FaHeart />
               </IconButton>
-              <IconButton aria-label="Notifications" variant="outline">
-                <FaBell />
+              <IconButton aria-label="Cart" color="white">
+                <FaShoppingCart />
               </IconButton>
               <Menu>
                 <MenuButton
                   as={IconButton}
-                  variant="outline"
                   aria-label="User Menu"
+                  transform="translateY(-50%)"
+                  bg="white"
+                  boxShadow="md"
+                  zIndex={10}
+                  color="#D2AC71"
+                  borderRadius={50}
+                  w="30px"
                 >
                   <FaUserCircle />
                 </MenuButton>
-                <MenuList bg="#1A1A1A" color="white">
+                <MenuList bg="#1A1A1A" color="white" zIndex="popover">
                   <MenuItem>My profile</MenuItem>
                   <MenuItem>Saved bundles</MenuItem>
                   <MenuItem>Invite friends</MenuItem>
@@ -191,59 +194,82 @@ const AppNavbar = () => {
         )}
       </Flex>
 
-      {/* Mobile Nav Dropdown */}
       {isMobile && mobileNavOpen && (
         <Box px={5} py={4} bg="black" display="flex" flexDirection="column">
+          {user && (
+            <>
+              <Flex align="center" mb={3}>
+                <Icon as={FaHeart} color="white" mr={1} />
+                <Text color="white" fontSize="sm">
+                  Wishlist
+                </Text>
+              </Flex>
+              <Flex align="center" mb={4}>
+                <Icon as={FaShoppingCart} color="white" mr={1} />
+                <Text color="white" fontSize="sm">
+                  Cart
+                </Text>
+              </Flex>
+            </>
+          )}
+
           <Flex gap={1}>
             <Icon as={FaGlobe} />
             <Text fontSize="sm">EN</Text>
           </Flex>
+
           <Box mt={4}>
             {!user ? (
               <>
-                <AppCta
-                  text="Login"
+                <Text
+                  color="white"
+                  mb={2}
                   onClick={loginWithGoogle}
-                  bgColor="#D2AC71"
-                />
-                <AppCta
-                  text="Sign up"
+                  _hover={{ color: "#D2AC71", cursor: "pointer" }}
+                >
+                  Login
+                </Text>
+                <Text
+                  color="white"
                   onClick={loginWithGoogle}
-                  bgColor="#D2AC71"
-                />
+                  _hover={{ color: "#D2AC71", cursor: "pointer" }}
+                >
+                  Sign up
+                </Text>
               </>
             ) : (
               <>
-                <Flex gap={3} mb={2}>
-                  <IconButton aria-label="Cart" variant="outline">
-                    <FaShoppingCart />
-                  </IconButton>
-                  <IconButton aria-label="Favorites" variant="outline">
-                    <FaHeart />
-                  </IconButton>
-                  <IconButton aria-label="Notifications" variant="outline">
-                    <FaBell />
-                  </IconButton>
-                </Flex>
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    variant="outline"
-                    aria-label="User Menu"
-                    w="full"
-                  >
-                    <FaUserCircle />
-                  </MenuButton>
-                  <MenuList bg="#1A1A1A" color="white">
-                    <MenuItem>My profile</MenuItem>
-                    <MenuItem>Saved bundles</MenuItem>
-                    <MenuItem>Invite friends</MenuItem>
-                    <MenuItem>Settings</MenuItem>
-                    <MenuItem onClick={() => signOut(auth)} color="red">
-                      Log out
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                <Text color="#D2AC71" mb={2} _hover={{ cursor: "pointer" }}>
+                  My profile
+                </Text>
+                <Text
+                  color="white"
+                  mb={2}
+                  _hover={{ color: "#D2AC71", cursor: "pointer" }}
+                >
+                  Saved deals
+                </Text>
+                <Text
+                  color="white"
+                  mb={2}
+                  _hover={{ color: "#D2AC71", cursor: "pointer" }}
+                >
+                  Invite friends
+                </Text>
+                <Text
+                  color="white"
+                  mb={2}
+                  _hover={{ color: "#D2AC71", cursor: "pointer" }}
+                >
+                  Settings
+                </Text>
+                <Text
+                  color="red"
+                  _hover={{ cursor: "pointer" }}
+                  onClick={() => signOut(auth)}
+                >
+                  Log out
+                </Text>
               </>
             )}
             <Box display="flex" justifyContent="center" mt={6}>
@@ -286,9 +312,6 @@ const AppNavbar = () => {
 
           <Box maxW="500px" mx="auto" mt={20}>
             <InputGroup mb={6}>
-              {/* <InputLeftElement pointerEvents="none">
-                <FaSearch color="gray.300" />
-              </InputLeftElement>  */}
               <Input
                 placeholder="Search"
                 bg="#1E1E1E"

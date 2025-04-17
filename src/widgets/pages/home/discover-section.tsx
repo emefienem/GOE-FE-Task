@@ -89,7 +89,7 @@ const HomeDiscoverSection = () => {
             zIndex={10}
             borderRadius="full"
             bg="white"
-            color="#ffd700"
+            color="#D2AC71"
             boxShadow="md"
             onClick={() => scroll("left")}
           >
@@ -105,7 +105,7 @@ const HomeDiscoverSection = () => {
             zIndex={10}
             borderRadius="full"
             bg="white"
-            color="#ffd700"
+            color="#D2AC71"
             boxShadow="md"
             onClick={() => scroll("right")}
           >

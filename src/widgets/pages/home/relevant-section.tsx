@@ -365,7 +365,7 @@ const HomeMostRelevantSection = () => {
             bg="white"
             boxShadow="md"
             zIndex={10}
-            color="#ffd700"
+            color="#D2AC71"
             borderRadius={50}
             onClick={() => scroll("left")}
           >
@@ -380,7 +380,7 @@ const HomeMostRelevantSection = () => {
             bg="white"
             boxShadow="md"
             zIndex={10}
-            color="#ffd700"
+            color="#D2AC71"
             borderRadius={50}
             onClick={() => scroll("right")}
           >
