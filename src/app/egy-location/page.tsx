@@ -215,6 +215,214 @@
 //     </HStack>
 //   );
 // };
+// "use client";
+// import { useState } from "react";
+// import {
+//   Box,
+//   Button,
+//   Flex,
+//   Text,
+//   VStack,
+//   HStack,
+//   NumberInput,
+// } from "@chakra-ui/react";
+// import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+// import { createListCollection, Select } from "@ark-ui/react";
+
+// const locations = ["Cairo", "Hurghada", "Sharm El-Sheikh", "Luxor & Aswan"];
+
+// const LocationPicker = ({
+//   location,
+//   setLocation,
+// }: {
+//   location: string;
+//   setLocation: (loc: string) => void;
+// }) => {
+//   const items = locations.map((loc) => ({ label: loc, value: loc }));
+
+//   // Create the collection using the proper utility function
+//   const collection = createListCollection({ items });
+
+//   return (
+//     <Select.Root
+//       value={[location]}
+//       onValueChange={(e) => setLocation(e.value[0])}
+//       collection={collection}
+//       positioning={{ sameWidth: true }}
+//     >
+//       <Select.Label>
+//         <Text mb={2}>Location</Text>
+//       </Select.Label>
+//       <Select.Control>
+//         <Select.Trigger />
+//       </Select.Control>
+//       <Select.Positioner>
+//         <Select.Content>
+//           {items.map((item) => (
+//             <Select.Item key={item.value} item={item}>
+//               <Select.ItemText>{item.label}</Select.ItemText>
+//             </Select.Item>
+//           ))}
+//         </Select.Content>
+//       </Select.Positioner>
+//     </Select.Root>
+//   );
+// };
+
+// const DateCell = ({
+//   date,
+//   selected,
+//   onClick,
+// }: {
+//   date: string;
+//   selected: boolean;
+//   onClick: () => void;
+// }) => (
+//   <Box
+//     w={"32px"}
+//     h={"32px"}
+//     display="flex"
+//     alignItems="center"
+//     justifyContent="center"
+//     borderRadius="md"
+//     bg={selected ? "yellow.400" : "transparent"}
+//     _hover={{ bg: "gray.600", cursor: "pointer" }}
+//     onClick={onClick}
+//   >
+//     <Text>{date}</Text>
+//   </Box>
+// );
+
+// const DatePicker = ({
+//   selectedDates,
+//   setSelectedDates,
+// }: {
+//   selectedDates: string[];
+//   setSelectedDates: (d: string[]) => void;
+// }) => {
+//   const dates = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+
+//   const toggleDate = (date: string) => {
+//     (setSelectedDates as React.Dispatch<React.SetStateAction<string[]>>)(
+//       (prev) =>
+//         prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date]
+//     );
+//   };
+
+//   return (
+//     <Box bg="gray.800" p={4} borderRadius="lg" color="white">
+//       <HStack justifyContent="space-between" mb={2}>
+//         <HiChevronLeft size={6} />
+//         <Text>February 2025</Text>
+//         <HiChevronRight size={6} />
+//       </HStack>
+//       <Flex wrap="wrap" gap={1}>
+//         {dates.map((date) => (
+//           <DateCell
+//             key={date}
+//             date={date}
+//             selected={selectedDates.includes(date)}
+//             onClick={() => toggleDate(date)}
+//           />
+//         ))}
+//       </Flex>
+//     </Box>
+//   );
+// };
+
+// type PeopleRoomPickerProps = {
+//   adults: number;
+//   setAdults: React.Dispatch<React.SetStateAction<number>>;
+//   children: number;
+//   setChildren: React.Dispatch<React.SetStateAction<number>>;
+//   rooms: number;
+//   setRooms: React.Dispatch<React.SetStateAction<number>>;
+// };
+// const PeopleRoomPicker = ({
+//   adults,
+//   setAdults,
+//   children,
+//   setChildren,
+//   rooms,
+//   setRooms,
+// }: PeopleRoomPickerProps) => (
+//   <VStack bg="gray.700" p={4} borderRadius="lg" gap={4} color="white">
+//     {[
+//       { label: "Adults", value: adults, setValue: setAdults },
+//       { label: "Children", value: children, setValue: setChildren },
+//       { label: "Rooms", value: rooms, setValue: setRooms },
+//     ].map(({ label, value, setValue }) => (
+//       <HStack key={label} justifyContent="space-between" w="100%">
+//         <Text>{label}</Text>
+//         <NumberInput.Root
+//           min={0}
+//           value={value.toString()}
+//           // onValueChange={(details) => setValue(details.valueAsNumber)}
+//           onValueChange={(details) => {
+//             const num = Number(details.value);
+//             if (!isNaN(num)) {
+//               setValue(num);
+//             }
+//           }}
+//           w="80px"
+//         >
+//           <NumberInput.Control>
+//             <NumberInput.Input bg="gray.600" color="white" />
+//           </NumberInput.Control>
+//         </NumberInput.Root>
+//       </HStack>
+//     ))}
+//   </VStack>
+// );
+
+// export default function EgyBookPicker() {
+//   const [location, setLocation] = useState(locations[0]);
+//   const [selectedDates, setSelectedDates] = useState<string[]>([] as string[]);
+//   const [adults, setAdults] = useState(2);
+//   const [children, setChildren] = useState(1);
+//   const [rooms, setRooms] = useState(1);
+
+//   return (
+//     <VStack
+//       gap={6}
+//       p={6}
+//       bg="gray.900"
+//       minH="100vh"
+//       align="start"
+//       color="white"
+//     >
+//       <Box>
+//         <Text mb={2}>Location</Text>
+//         <LocationPicker location={location} setLocation={setLocation} />
+//       </Box>
+
+//       <Box>
+//         <Text mb={2}>Select Dates</Text>
+//         <DatePicker
+//           selectedDates={selectedDates}
+//           setSelectedDates={setSelectedDates}
+//         />
+//       </Box>
+
+//       <Box>
+//         <Text mb={2}>Guests</Text>
+//         <PeopleRoomPicker
+//           adults={adults}
+//           setAdults={setAdults}
+//           children={children}
+//           setChildren={setChildren}
+//           rooms={rooms}
+//           setRooms={setRooms}
+//         />
+//       </Box>
+
+//       <Button bg="green.500" _hover={{ bg: "green.600" }}>
+//         Explore Stays
+//       </Button>
+//     </VStack>
+//   );
+// }
+
 "use client";
 import { useState } from "react";
 import {
@@ -240,7 +448,6 @@ const LocationPicker = ({
 }) => {
   const items = locations.map((loc) => ({ label: loc, value: loc }));
 
-  // Create the collection using the proper utility function
   const collection = createListCollection({ items });
 
   return (
@@ -333,23 +540,24 @@ const DatePicker = ({
 type PeopleRoomPickerProps = {
   adults: number;
   setAdults: React.Dispatch<React.SetStateAction<number>>;
-  children: number;
-  setChildren: React.Dispatch<React.SetStateAction<number>>;
+  numChildren: number;
+  setNumChildren: React.Dispatch<React.SetStateAction<number>>;
   rooms: number;
   setRooms: React.Dispatch<React.SetStateAction<number>>;
 };
+
 const PeopleRoomPicker = ({
   adults,
   setAdults,
-  children,
-  setChildren,
+  numChildren,
+  setNumChildren,
   rooms,
   setRooms,
 }: PeopleRoomPickerProps) => (
   <VStack bg="gray.700" p={4} borderRadius="lg" gap={4} color="white">
     {[
       { label: "Adults", value: adults, setValue: setAdults },
-      { label: "Children", value: children, setValue: setChildren },
+      { label: "Children", value: numChildren, setValue: setNumChildren },
       { label: "Rooms", value: rooms, setValue: setRooms },
     ].map(({ label, value, setValue }) => (
       <HStack key={label} justifyContent="space-between" w="100%">
@@ -357,7 +565,6 @@ const PeopleRoomPicker = ({
         <NumberInput.Root
           min={0}
           value={value.toString()}
-          // onValueChange={(details) => setValue(details.valueAsNumber)}
           onValueChange={(details) => {
             const num = Number(details.value);
             if (!isNaN(num)) {
@@ -377,9 +584,9 @@ const PeopleRoomPicker = ({
 
 export default function EgyBookPicker() {
   const [location, setLocation] = useState(locations[0]);
-  const [selectedDates, setSelectedDates] = useState<string[]>([] as string[]);
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(1);
+  const [numChildren, setNumChildren] = useState(1);
   const [rooms, setRooms] = useState(1);
 
   return (
@@ -409,8 +616,8 @@ export default function EgyBookPicker() {
         <PeopleRoomPicker
           adults={adults}
           setAdults={setAdults}
-          children={children}
-          setChildren={setChildren}
+          numChildren={numChildren}
+          setNumChildren={setNumChildren}
           rooms={rooms}
           setRooms={setRooms}
         />
