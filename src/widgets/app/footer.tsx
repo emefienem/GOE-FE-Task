@@ -59,7 +59,9 @@ const AppFooter = () => {
           </Button> */}
           <AppCta text="Discover More" bgColor="#D2AC71" />
           <HStack gap={6} pt={4} fontSize="sm">
-            <Link href="#">Home</Link>
+            <Link href="#" color="white">
+              Home
+            </Link>
 
             <Link href="#">
               <Text as="span">
