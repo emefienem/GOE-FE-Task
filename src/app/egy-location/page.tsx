@@ -215,6 +215,7 @@
 //     </HStack>
 //   );
 // };
+
 // "use client";
 // import { useState } from "react";
 // import {
@@ -240,7 +241,6 @@
 // }) => {
 //   const items = locations.map((loc) => ({ label: loc, value: loc }));
 
-//   // Create the collection using the proper utility function
 //   const collection = createListCollection({ items });
 
 //   return (
@@ -333,23 +333,24 @@
 // type PeopleRoomPickerProps = {
 //   adults: number;
 //   setAdults: React.Dispatch<React.SetStateAction<number>>;
-//   children: number;
-//   setChildren: React.Dispatch<React.SetStateAction<number>>;
+//   numChildren: number;
+//   setNumChildren: React.Dispatch<React.SetStateAction<number>>;
 //   rooms: number;
 //   setRooms: React.Dispatch<React.SetStateAction<number>>;
 // };
+
 // const PeopleRoomPicker = ({
 //   adults,
 //   setAdults,
-//   children,
-//   setChildren,
+//   numChildren,
+//   setNumChildren,
 //   rooms,
 //   setRooms,
 // }: PeopleRoomPickerProps) => (
 //   <VStack bg="gray.700" p={4} borderRadius="lg" gap={4} color="white">
 //     {[
 //       { label: "Adults", value: adults, setValue: setAdults },
-//       { label: "Children", value: children, setValue: setChildren },
+//       { label: "Children", value: numChildren, setValue: setNumChildren },
 //       { label: "Rooms", value: rooms, setValue: setRooms },
 //     ].map(({ label, value, setValue }) => (
 //       <HStack key={label} justifyContent="space-between" w="100%">
@@ -357,7 +358,6 @@
 //         <NumberInput.Root
 //           min={0}
 //           value={value.toString()}
-//           // onValueChange={(details) => setValue(details.valueAsNumber)}
 //           onValueChange={(details) => {
 //             const num = Number(details.value);
 //             if (!isNaN(num)) {
@@ -377,9 +377,9 @@
 
 // export default function EgyBookPicker() {
 //   const [location, setLocation] = useState(locations[0]);
-//   const [selectedDates, setSelectedDates] = useState<string[]>([] as string[]);
+//   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 //   const [adults, setAdults] = useState(2);
-//   const [children, setChildren] = useState(1);
+//   const [numChildren, setNumChildren] = useState(1);
 //   const [rooms, setRooms] = useState(1);
 
 //   return (
@@ -409,8 +409,8 @@
 //         <PeopleRoomPicker
 //           adults={adults}
 //           setAdults={setAdults}
-//           children={children}
-//           setChildren={setChildren}
+//           numChildren={numChildren}
+//           setNumChildren={setNumChildren}
 //           rooms={rooms}
 //           setRooms={setRooms}
 //         />
@@ -427,205 +427,231 @@
 import { useState } from "react";
 import {
   Box,
-  Button,
   Flex,
+  Button,
+  Icon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverBody,
   Text,
-  VStack,
   HStack,
-  NumberInput,
+  VStack,
+  Grid,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { createListCollection, Select } from "@ark-ui/react";
+import { FiMapPin, FiCalendar, FiUsers } from "react-icons/fi";
+import { FiChevronDown, FiPlus, FiMinus } from "react-icons/fi";
 
-const locations = ["Cairo", "Hurghada", "Sharm El-Sheikh", "Luxor & Aswan"];
+const locations = [
+  "Cairo, Egypt",
+  "Hurghada",
+  "Sharm El-Sheikh",
+  "Luxor & Aswan",
+];
 
-const LocationPicker = ({
-  location,
-  setLocation,
-}: {
-  location: string;
-  setLocation: (loc: string) => void;
-}) => {
-  const items = locations.map((loc) => ({ label: loc, value: loc }));
+export default function Home() {
+  const [selectedLocation, setSelectedLocation] = useState(locations[0]);
+  const { open: dateOpen, onOpen: openDate } = useDisclosure();
+  const { open: guestOpen, onOpen: openGuest } = useDisclosure();
 
-  const collection = createListCollection({ items });
-
-  return (
-    <Select.Root
-      value={[location]}
-      onValueChange={(e) => setLocation(e.value[0])}
-      collection={collection}
-      positioning={{ sameWidth: true }}
-    >
-      <Select.Label>
-        <Text mb={2}>Location</Text>
-      </Select.Label>
-      <Select.Control>
-        <Select.Trigger />
-      </Select.Control>
-      <Select.Positioner>
-        <Select.Content>
-          {items.map((item) => (
-            <Select.Item key={item.value} item={item}>
-              <Select.ItemText>{item.label}</Select.ItemText>
-            </Select.Item>
-          ))}
-        </Select.Content>
-      </Select.Positioner>
-    </Select.Root>
+  // Date state
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().valueOf() + 86400000)
   );
-};
 
-const DateCell = ({
-  date,
-  selected,
-  onClick,
-}: {
-  date: string;
-  selected: boolean;
-  onClick: () => void;
-}) => (
-  <Box
-    w={"32px"}
-    h={"32px"}
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    borderRadius="md"
-    bg={selected ? "yellow.400" : "transparent"}
-    _hover={{ bg: "gray.600", cursor: "pointer" }}
-    onClick={onClick}
-  >
-    <Text>{date}</Text>
-  </Box>
-);
-
-const DatePicker = ({
-  selectedDates,
-  setSelectedDates,
-}: {
-  selectedDates: string[];
-  setSelectedDates: (d: string[]) => void;
-}) => {
-  const dates = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
-
-  const toggleDate = (date: string) => {
-    (setSelectedDates as React.Dispatch<React.SetStateAction<string[]>>)(
-      (prev) =>
-        prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date]
-    );
-  };
-
-  return (
-    <Box bg="gray.800" p={4} borderRadius="lg" color="white">
-      <HStack justifyContent="space-between" mb={2}>
-        <HiChevronLeft size={6} />
-        <Text>February 2025</Text>
-        <HiChevronRight size={6} />
-      </HStack>
-      <Flex wrap="wrap" gap={1}>
-        {dates.map((date) => (
-          <DateCell
-            key={date}
-            date={date}
-            selected={selectedDates.includes(date)}
-            onClick={() => toggleDate(date)}
-          />
-        ))}
-      </Flex>
-    </Box>
-  );
-};
-
-type PeopleRoomPickerProps = {
-  adults: number;
-  setAdults: React.Dispatch<React.SetStateAction<number>>;
-  numChildren: number;
-  setNumChildren: React.Dispatch<React.SetStateAction<number>>;
-  rooms: number;
-  setRooms: React.Dispatch<React.SetStateAction<number>>;
-};
-
-const PeopleRoomPicker = ({
-  adults,
-  setAdults,
-  numChildren,
-  setNumChildren,
-  rooms,
-  setRooms,
-}: PeopleRoomPickerProps) => (
-  <VStack bg="gray.700" p={4} borderRadius="lg" gap={4} color="white">
-    {[
-      { label: "Adults", value: adults, setValue: setAdults },
-      { label: "Children", value: numChildren, setValue: setNumChildren },
-      { label: "Rooms", value: rooms, setValue: setRooms },
-    ].map(({ label, value, setValue }) => (
-      <HStack key={label} justifyContent="space-between" w="100%">
-        <Text>{label}</Text>
-        <NumberInput.Root
-          min={0}
-          value={value.toString()}
-          onValueChange={(details) => {
-            const num = Number(details.value);
-            if (!isNaN(num)) {
-              setValue(num);
-            }
-          }}
-          w="80px"
-        >
-          <NumberInput.Control>
-            <NumberInput.Input bg="gray.600" color="white" />
-          </NumberInput.Control>
-        </NumberInput.Root>
-      </HStack>
-    ))}
-  </VStack>
-);
-
-export default function EgyBookPicker() {
-  const [location, setLocation] = useState(locations[0]);
-  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  // Guests/rooms state
   const [adults, setAdults] = useState(2);
-  const [numChildren, setNumChildren] = useState(1);
+  const [children, setChildren] = useState(1);
   const [rooms, setRooms] = useState(1);
 
   return (
-    <VStack
-      gap={6}
-      p={6}
-      bg="gray.900"
-      minH="100vh"
-      align="start"
-      color="white"
+    <Flex
+      p={4}
+      bg="gray.800"
+      borderRadius="xl"
+      align="center"
+      justify="space-between"
     >
-      <Box>
-        <Text mb={2}>Location</Text>
-        <LocationPicker location={location} setLocation={setLocation} />
-      </Box>
+      {/* Location Picker */}
 
-      <Box>
-        <Text mb={2}>Select Dates</Text>
-        <DatePicker
-          selectedDates={selectedDates}
-          setSelectedDates={setSelectedDates}
-        />
-      </Box>
+      <Popover.Root>
+        <PopoverTrigger>
+          <Button variant="ghost">
+            <FiChevronDown />
+            <Icon as={FiMapPin} /> {selectedLocation}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent bg="gray.700" borderColor="gray.600">
+          <PopoverBody>
+            <VStack gap={1} align="stretch">
+              {locations.map((loc) => (
+                <Box
+                  key={loc}
+                  px={3}
+                  py={2}
+                  borderRadius="md"
+                  _hover={{ bg: "gray.600", cursor: "pointer" }}
+                  onClick={() => {
+                    setSelectedLocation(loc);
+                  }}
+                >
+                  <Text>{loc}</Text>
+                </Box>
+              ))}
+            </VStack>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover.Root>
 
-      <Box>
-        <Text mb={2}>Guests</Text>
-        <PeopleRoomPicker
-          adults={adults}
-          setAdults={setAdults}
-          numChildren={numChildren}
-          setNumChildren={setNumChildren}
-          rooms={rooms}
-          setRooms={setRooms}
-        />
-      </Box>
+      {/* Date Picker */}
+      <Popover.Root open={dateOpen} onOpenChange={openDate}>
+        <PopoverTrigger>
+          <Button variant="ghost" colorScheme="whiteAlpha">
+            <FiChevronDown />
+            <HStack gap={2}>
+              <Icon as={FiCalendar} />
+              <Text>{`${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`}</Text>
+            </HStack>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent bg="gray.700" borderColor="gray.600" w="600px">
+          <PopoverArrow />
+          <PopoverHeader>
+            <Text fontWeight="bold" color="white">
+              Select dates
+            </Text>
+          </PopoverHeader>
+          <PopoverBody>
+            {/* Two months calendar grid placeholder */}
+            <Flex justify="space-between">
+              <Calendar monthOffset={0} />
+              <Calendar monthOffset={1} />
+            </Flex>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover.Root>
 
-      <Button bg="green.500" _hover={{ bg: "green.600" }}>
+      {/* Guests & Rooms Picker */}
+      <Popover.Root
+        open={guestOpen}
+        // onOpen={openGuest}
+        onOpenChange={openGuest}
+      >
+        <PopoverTrigger>
+          <Button variant="ghost" colorScheme="whiteAlpha">
+            <FiChevronDown />
+            <HStack gap={2}>
+              <Icon as={FiUsers} />
+              <Text>{`${adults} Adults, ${children} Children, ${rooms} Room`}</Text>
+            </HStack>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent bg="gray.700" borderColor="gray.600">
+          <PopoverArrow />
+          <PopoverHeader>
+            <Text fontWeight="bold" color="white">
+              Guests and Rooms
+            </Text>
+          </PopoverHeader>
+          <PopoverBody>
+            <VStack gap={4} align="stretch">
+              {/** Adults **/}
+              <Flex justify="space-between" align="center">
+                <Text>Adults</Text>
+                <HStack>
+                  <Button
+                    size="sm"
+                    onClick={() => setAdults((a) => Math.max(0, a - 1))}
+                    gap={0}
+                  >
+                    <FiMinus />
+                  </Button>
+                  <Text>{adults}</Text>
+                  <Button
+                    size="sm"
+                    onClick={() => setAdults((a) => a + 1)}
+                    gap={0}
+                  >
+                    <FiPlus />
+                  </Button>
+                </HStack>
+              </Flex>
+              {/** Children **/}
+              <Flex justify="space-between" align="center">
+                <Text>Children</Text>
+                <HStack>
+                  <Button
+                    size="sm"
+                    onClick={() => setChildren((c) => Math.max(0, c - 1))}
+                    gap={0}
+                  >
+                    <FiMinus />
+                  </Button>
+                  <Text>{children}</Text>
+                  <Button
+                    size="sm"
+                    onClick={() => setChildren((c) => c + 1)}
+                    gap={0}
+                  >
+                    <FiPlus />
+                  </Button>
+                </HStack>
+              </Flex>
+              {/** Rooms **/}
+              <Flex justify="space-between" align="center">
+                <Text>Rooms</Text>
+                <HStack>
+                  <Button
+                    size="sm"
+                    onClick={() => setRooms((r) => Math.max(1, r - 1))}
+                    gap={0}
+                  >
+                    <FiMinus />
+                  </Button>
+                  <Text>{rooms}</Text>
+                  <Button
+                    size="sm"
+                    onClick={() => setRooms((r) => r + 1)}
+                    gap={0}
+                  >
+                    <FiPlus />
+                  </Button>
+                </HStack>
+              </Flex>
+            </VStack>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover.Root>
+
+      {/* Explore Button */}
+      <Button colorScheme="green" ml={4} px={6}>
         Explore Stays
       </Button>
-    </VStack>
+    </Flex>
+  );
+}
+
+function Calendar({ monthOffset }: { monthOffset: 0 | 1 }) {
+  const monthNames = ["February 2025", "March 2025"];
+  return (
+    <Box>
+      <Text mb={2} fontWeight="bold" color="white">
+        {monthNames[monthOffset]}
+      </Text>
+      <Grid templateColumns="repeat(7, 1fr)" gap={1}>
+        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
+          <Text key={d} textAlign="center" fontSize="sm" color="gray.300">
+            {d}
+          </Text>
+        ))}
+        {Array.from({ length: 30 }).map((_, i) => (
+          <Box key={i} h="32px" w="32px" bg="gray.600" borderRadius="md" />
+        ))}
+      </Grid>
+    </Box>
   );
 }
