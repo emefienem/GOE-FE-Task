@@ -55,13 +55,26 @@ const AppNavbar = () => {
         borderBottom="1px solid #222"
       >
         <Box boxSize={{ base: "60px", md: "100px" }} alignItems="center">
-          <Image
-            src="/logo.png"
-            alt="GOE Logo"
-            width={100}
-            height={100}
-            style={{ objectFit: "contain" }}
-          />
+          {!isMobile ? (
+            <Box boxSize={{ base: "60px", md: "100px" }}>
+              <Image
+                src="/logo.png"
+                alt="GOE Logo"
+                width={100}
+                height={100}
+                style={{ objectFit: "contain" }}
+              />
+            </Box>
+          ) : (
+            <Text fontWeight="bold" fontSize="xl">
+              <Box as="span" color="#D2AC71">
+                Egy
+              </Box>
+              <Box as="span" color="white">
+                Book
+              </Box>
+            </Text>
+          )}
         </Box>
 
         {/* Middle Nav (Desktop only) */}
@@ -164,13 +177,13 @@ const AppNavbar = () => {
       {/* Mobile Nav Dropdown */}
       {isMobile && mobileNavOpen && (
         <Box px={5} py={4} bg="black" display="flex" flexDirection="column">
-          <Flex>
+          <Flex gap={1}>
             <Icon as={FaGlobe} />
             <Text fontSize="sm">EN</Text>
           </Flex>
           <Box mt={4}>
             {!user ? (
-              <Flex gap={3}>
+              <Flex gap={2} flexDirection="column">
                 <AppCta
                   text="Login"
                   onClick={loginWithGoogle}
