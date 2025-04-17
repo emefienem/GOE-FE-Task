@@ -38,7 +38,13 @@ const AppNavbar = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
 
-  const navLinks = ["GOE", "EgyBook", "EgyExplore", "EgyTales", "EgyTreasure"];
+  const navLinks = [
+    { prefix: "GOE", suffix: "" },
+    { prefix: "Egy", suffix: "Book" },
+    { prefix: "Egy", suffix: "Explore" },
+    { prefix: "Egy", suffix: "Tales" },
+    { prefix: "Egy", suffix: "Treasure" },
+  ];
   const cities = ["Cairo", "Alexandria", "Hurghada"];
 
   const handleSearchIconClick = () => {
@@ -88,13 +94,18 @@ const AppNavbar = () => {
           align="center"
           display={!isMobile ? "flex" : "none"}
         >
-          {navLinks.map((link) => (
+          {navLinks.map(({ prefix, suffix }) => (
             <Text
-              key={link}
+              key={prefix + suffix}
               _hover={{ color: "#CBAA7E", cursor: "pointer" }}
               onClick={undefined}
             >
-              {link}
+              <Box as="span" color="#D2AC71">
+                {prefix}
+              </Box>
+              <Box as="span" color="white">
+                {suffix}
+              </Box>
             </Text>
           ))}
         </Flex>
