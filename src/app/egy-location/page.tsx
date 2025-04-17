@@ -330,6 +330,14 @@ const DatePicker = ({
   );
 };
 
+type PeopleRoomPickerProps = {
+  adults: number;
+  setAdults: React.Dispatch<React.SetStateAction<number>>;
+  children: number;
+  setChildren: React.Dispatch<React.SetStateAction<number>>;
+  rooms: number;
+  setRooms: React.Dispatch<React.SetStateAction<number>>;
+};
 const PeopleRoomPicker = ({
   adults,
   setAdults,
@@ -337,7 +345,7 @@ const PeopleRoomPicker = ({
   setChildren,
   rooms,
   setRooms,
-}: any) => (
+}: PeopleRoomPickerProps) => (
   <VStack bg="gray.700" p={4} borderRadius="lg" gap={4} color="white">
     {[
       { label: "Adults", value: adults, setValue: setAdults },
@@ -348,8 +356,14 @@ const PeopleRoomPicker = ({
         <Text>{label}</Text>
         <NumberInput.Root
           min={0}
-          value={value}
-          onValueChange={(details) => setValue(details.valueAsNumber)}
+          value={value.toString()}
+          // onValueChange={(details) => setValue(details.valueAsNumber)}
+          onValueChange={(details) => {
+            const num = Number(details.value);
+            if (!isNaN(num)) {
+              setValue(num);
+            }
+          }}
           w="80px"
         >
           <NumberInput.Control>
