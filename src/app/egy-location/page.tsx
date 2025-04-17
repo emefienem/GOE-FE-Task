@@ -458,10 +458,8 @@ export default function Home() {
   const { open: guestOpen, onOpen: openGuest } = useDisclosure();
 
   // Date state
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(
-    new Date(new Date().valueOf() + 86400000)
-  );
+  const [startDate] = useState(new Date());
+  const [endDate] = useState(new Date(Date.now() + 86400000));
 
   // Guests/rooms state
   const [adults, setAdults] = useState(2);
