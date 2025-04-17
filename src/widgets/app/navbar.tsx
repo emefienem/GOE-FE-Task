@@ -47,7 +47,6 @@ const AppNavbar = () => {
 
   return (
     <Box bg="black" color="white" position="relative">
-      {/* Top Navbar */}
       <Flex
         justify="space-between"
         align="center"
@@ -55,7 +54,6 @@ const AppNavbar = () => {
         py={4}
         borderBottom="1px solid #222"
       >
-        {/* Logo */}
         <Box boxSize={{ base: "60px", md: "100px" }}>
           <Image
             src="/logo.png"
@@ -77,14 +75,13 @@ const AppNavbar = () => {
             <Text
               key={link}
               _hover={{ color: "#CBAA7E", cursor: "pointer" }}
-              onClick={undefined} // No action here since search is triggered by icon
+              onClick={undefined}
             >
               {link}
             </Text>
           ))}
         </Flex>
 
-        {/* Right side icons/buttons (Desktop) */}
         <Flex gap={3} align="center" display={!isMobile ? "flex" : "none"}>
           <IconButton
             aria-label="Search"
@@ -145,7 +142,6 @@ const AppNavbar = () => {
         {/* Mobile Hamburger & Search Icons */}
         {isMobile && (
           <Flex align="center">
-            {/* Mobile Search Icon */}
             <IconButton
               aria-label="Search"
               variant="ghost"
@@ -168,16 +164,10 @@ const AppNavbar = () => {
       {/* Mobile Nav Dropdown */}
       {isMobile && mobileNavOpen && (
         <Box px={5} py={4} bg="black" display="flex" flexDirection="column">
-          {navLinks.map((link) => (
-            <Text
-              key={link}
-              py={2}
-              _hover={{ color: "#CBAA7E", cursor: "pointer" }}
-              onClick={() => setMobileNavOpen(false)}
-            >
-              {link}
-            </Text>
-          ))}
+          <Flex>
+            <Icon as={FaGlobe} />
+            <Text fontSize="sm">EN</Text>
+          </Flex>
           <Box mt={4}>
             {!user ? (
               <Flex gap={3}>
@@ -226,6 +216,17 @@ const AppNavbar = () => {
                 </Menu>
               </>
             )}
+            <Image
+              src="/footer-logo.png"
+              alt="Navbar Logo"
+              width={100}
+              height={100}
+              style={{
+                alignItems: "center",
+                justifyItems: "center",
+                display: "flex",
+              }}
+            />
           </Box>
         </Box>
       )}

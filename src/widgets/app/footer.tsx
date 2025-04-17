@@ -61,39 +61,47 @@ const AppFooter = () => {
           <HStack gap={6} pt={4} fontSize="sm">
             <Link href="#">Home</Link>
 
-            <Link href="#" display="inline-flex" alignItems="center">
-              <Text as="span" color="#D2AC71">
-                Egy
-              </Text>
-              <Text as="span" color="white">
-                Book
-              </Text>
-            </Link>
-
-            <Link href="#" display="inline-flex" alignItems="center">
-              <Text as="span" color="#D2AC71">
-                Egy
-              </Text>
-              <Text as="span" color="white">
-                Explore
+            <Link href="#">
+              <Text as="span">
+                <Text as="span" color="#D2AC71" display="inline">
+                  Egy
+                </Text>
+                <Text as="span" color="white" display="inline">
+                  Book
+                </Text>
               </Text>
             </Link>
 
-            <Link href="#" display="inline-flex" alignItems="center">
-              <Text as="span" color="#D2AC71">
-                Egy
-              </Text>
-              <Text as="span" color="white">
-                Tales
+            <Link href="#">
+              <Text as="span">
+                <Text as="span" color="#D2AC71" display="inline">
+                  Egy
+                </Text>
+                <Text as="span" color="white" display="inline">
+                  Explore
+                </Text>
               </Text>
             </Link>
 
-            <Link href="#" display="inline-flex" alignItems="center">
-              <Text as="span" color="#D2AC71">
-                Egy
+            <Link href="#">
+              <Text as="span">
+                <Text as="span" color="#D2AC71" display="inline">
+                  Egy
+                </Text>
+                <Text as="span" color="white" display="inline">
+                  Tales
+                </Text>
               </Text>
-              <Text as="span" color="white">
-                Treasure
+            </Link>
+
+            <Link href="#">
+              <Text as="span">
+                <Text as="span" color="#D2AC71" display="inline">
+                  Egy
+                </Text>
+                <Text as="span" color="white" display="inline">
+                  Treasure
+                </Text>
               </Text>
             </Link>
           </HStack>

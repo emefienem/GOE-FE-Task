@@ -85,7 +85,8 @@ const HomeMostRelevantSection = () => {
               bg="white"
               borderRadius="40px"
               boxShadow="md"
-              minW="288px"
+              minW={{ base: "240px", sm: "270px", md: "288px" }}
+              maxW={{ base: "260px", sm: "280px", md: "288px" }}
               flexShrink={0}
               position="relative"
             >
@@ -118,12 +119,19 @@ const HomeMostRelevantSection = () => {
               </Badge>
 
               <Image
+                // src={hotel.image}
+                // alt={hotel.name}
+                // borderTopRadius="40px"
+                // borderBottomRadius="40px"
+                // w="450px"
+                // h="300px"
+                // objectFit="cover"
                 src={hotel.image}
                 alt={hotel.name}
                 borderTopRadius="40px"
                 borderBottomRadius="40px"
-                w="450px"
-                h="300px"
+                w="100%"
+                h={{ base: "180px", sm: "220px", md: "300px" }}
                 objectFit="cover"
               />
 

@@ -65,13 +65,22 @@ const HomeTrendingSection = () => {
           <Box
             key={index}
             // bg="gray.900"
+            // borderRadius="xl"
+            // overflow="hidden"
+            // boxShadow="lg"
+            // position="relative"
+            // transition="all 0.3s"
+            // _hover={{ transform: "scale(1.03)" }}
+            // minW="300px"
+            // flexShrink={0}
             borderRadius="xl"
             overflow="hidden"
             boxShadow="lg"
             position="relative"
             transition="all 0.3s"
             _hover={{ transform: "scale(1.03)" }}
-            minW="300px"
+            minW={{ base: "220px", sm: "260px", md: "300px" }}
+            maxW={{ base: "240px", sm: "280px", md: "300px" }}
             flexShrink={0}
           >
             <Image
@@ -86,7 +95,12 @@ const HomeTrendingSection = () => {
               <Text fontSize="3xl" fontWeight="bold" color="white">
                 {dest.name}
               </Text>
-              <Text fontSize="xl" color="white" w="300px" fontWeight={600}>
+              <Text
+                fontSize={{ base: "md", md: "xl" }}
+                color="white"
+                fontWeight={600}
+                w={{ base: "100%", md: "300px" }}
+              >
                 {dest.description}
               </Text>
               <Button
