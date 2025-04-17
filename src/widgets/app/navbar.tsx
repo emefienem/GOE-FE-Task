@@ -132,7 +132,7 @@ const AppNavbar = () => {
               />
             </>
           ) : (
-            <>
+            <Flex gap={3} align="center">
               <IconButton aria-label="Favorites" color="white">
                 <FaHeart />
               </IconButton>
@@ -144,7 +144,7 @@ const AppNavbar = () => {
                   as={IconButton}
                   aria-label="User Menu"
                   transform="translateY(-50%)"
-                  bg="white"
+                  // bg="white"
                   boxShadow="md"
                   zIndex={10}
                   color="#D2AC71"
@@ -153,7 +153,7 @@ const AppNavbar = () => {
                 >
                   <FaUserCircle />
                 </MenuButton>
-                <MenuList bg="#1A1A1A" color="white" zIndex="popover">
+                <MenuList bg="#1A1A1A" color="white" zIndex={1500}>
                   <MenuItem>My profile</MenuItem>
                   <MenuItem>Saved bundles</MenuItem>
                   <MenuItem>Invite friends</MenuItem>
@@ -163,7 +163,7 @@ const AppNavbar = () => {
                   </MenuItem>
                 </MenuList>
               </Menu>
-            </>
+            </Flex>
           )}
         </Flex>
 
