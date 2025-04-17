@@ -12,7 +12,7 @@ import {
   FaInstagram,
   FaFacebookF,
   FaTiktok,
-  FaTimes,
+  FaTwitter,
   FaLinkedinIn,
 } from "react-icons/fa";
 import AppCta from "./cta";
@@ -121,7 +121,7 @@ const AppFooter = () => {
               <FaTiktok />
             </IconButton>
             <IconButton bg="#D2AC71" p={2} color="white" borderRadius="md">
-              <FaTimes />
+              <FaTwitter />
             </IconButton>
             <IconButton bg="#D2AC71" p={2} color="white" borderRadius="md">
               <FaLinkedinIn />

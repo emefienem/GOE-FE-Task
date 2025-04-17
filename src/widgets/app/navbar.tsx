@@ -143,13 +143,11 @@ const AppNavbar = () => {
                 <MenuButton
                   as={IconButton}
                   aria-label="User Menu"
-                  // transform="translateY(-50%)"
-                  // bg="white"
-                  // boxShadow="md"
                   zIndex={10}
                   color="#D2AC71"
                   borderRadius={50}
                   w={30}
+                  alignItems="center"
                 >
                   <FaUserCircle />
                 </MenuButton>
