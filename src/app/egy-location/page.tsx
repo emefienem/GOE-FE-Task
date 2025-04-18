@@ -480,7 +480,7 @@ export default function BookingBar() {
     new Date(Date.now() + 8 * 24 * 3600_000)
   );
   const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(1);
+  const [numChildren, setNumChildren] = useState(1);
   const [rooms, setRooms] = useState(1);
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [isGuestOpen, setIsGuestOpen] = useState(false);
@@ -586,7 +586,7 @@ export default function BookingBar() {
             >
               <FaUser className="text-[#D2AC71]" />
               <span>
-                {adults} Adults, {children} Children, {rooms} Rooms
+                {adults} Adults, {numChildren} Children, {rooms} Rooms
               </span>
               <FiChevronDown
                 className={`transition-transform ${
@@ -598,10 +598,10 @@ export default function BookingBar() {
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
                 <GuestPopover
                   adults={adults}
-                  children={children}
+                  numChildren={numChildren}
                   rooms={rooms}
                   setAdults={setAdults}
-                  setChildren={setChildren}
+                  setNumChildren={setNumChildren}
                   setRooms={setRooms}
                 />
               </div>
@@ -687,7 +687,7 @@ export default function BookingBar() {
             >
               <FaUser className="text-[#D2AC71]" />
               <span>
-                {adults} Adults, {children} Children, {rooms} Rooms
+                {adults} Adults, {numChildren} Children, {rooms} Rooms
               </span>
               <FiChevronDown
                 className={`transition-transform ${
@@ -699,10 +699,10 @@ export default function BookingBar() {
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
                 <GuestPopover
                   adults={adults}
-                  children={children}
+                  numChildren={numChildren}
                   rooms={rooms}
                   setAdults={setAdults}
-                  setChildren={setChildren}
+                  setNumChildren={setNumChildren}
                   setRooms={setRooms}
                 />
               </div>

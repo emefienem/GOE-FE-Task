@@ -2,17 +2,17 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 
 export default function GuestPopover({
   adults,
-  children,
+  numChildren,
   rooms,
   setAdults,
-  setChildren,
+  setNumChildren,
   setRooms,
 }: {
   adults: number;
-  children: number;
+  numChildren: number;
   rooms: number;
   setAdults: (count: number) => void;
-  setChildren: (count: number) => void;
+  setNumChildren: (count: number) => void;
   setRooms: (count: number) => void;
 }) {
   const renderControl = (
@@ -43,7 +43,7 @@ export default function GuestPopover({
   return (
     <div className="p-4 space-y-3">
       {renderControl("Adults", adults, setAdults)}
-      {renderControl("Children", children, setChildren)}
+      {renderControl("Children", numChildren, setNumChildren)}
       {renderControl("Rooms", rooms, setRooms)}
     </div>
   );
