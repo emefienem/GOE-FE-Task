@@ -5,15 +5,15 @@
 - **Next.js** – Framework for server-side rendering and static site generation.
 - **Chakra UI** – Accessible component library for React.
 - **Tailwind CSS** – Utility-first CSS framework for rapid styling.
-- **TypeScript** – Static type checking (optional if used).
-- **GSAP** – (Optional) For animations.
+- **TypeScript** – Static type checking.
+- **GSAP** – For animations.
 
 ## 🚀 Getting Started
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/emefienem/goe-fe-task.git
+   git clone https://github.com/emefienem/GOE-FE-Task.git
    cd your-project-name
 
 2. **Install dependencies**
