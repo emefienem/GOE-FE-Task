@@ -1,6 +1,25 @@
+"use client";
+import useAnimation from "@/hooks/use-animation";
 import { Box, Button, Flex, Image, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
 
 const HomeAdventureSection = () => {
+  const leftRef = useRef(null);
+  const { animate } = useAnimation();
+
+  useEffect(() => {
+    if (leftRef.current) {
+      gsap.fromTo(leftRef.current, animate("slide-left", { opacity: 0 }), {
+        x: 0,
+        opacity: 1,
+        scrollTrigger: {
+          trigger: leftRef.current,
+          start: "top 80%",
+        },
+      });
+    }
+  }, []);
+
   return (
     <Flex
       bg="blackAlpha.900"
@@ -8,6 +27,7 @@ const HomeAdventureSection = () => {
       align="center"
       justify="center"
       px={4}
+      ref={leftRef}
     >
       <Flex
         direction={{ base: "column", md: "row" }}

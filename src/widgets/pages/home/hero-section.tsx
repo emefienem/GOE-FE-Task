@@ -14,18 +14,17 @@ const HomeHeroSection = () => {
   const isTablet = useMediaQuery(MediaQueryBreakPoints.tablet);
 
   const heroHeight = isMobile ? "400px" : isTablet ? "500px" : "500px";
-  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
   const { animate } = useAnimation();
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (el) {
-      gsap.fromTo(el, animate("fade-in", { opacity: 0, y: 50 }), {
-        ...animate("fade-in"),
+    if (contentRef.current) {
+      gsap.fromTo(contentRef.current, animate("slide-up", { opacity: 0 }), {
+        y: 0,
+        opacity: 1,
         scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          toggleActions: "play none none none",
+          trigger: contentRef.current,
+          start: "top bottom",
         },
       });
     }
@@ -34,7 +33,7 @@ const HomeHeroSection = () => {
   return (
     <Box bg="black">
       <Box
-        ref={sectionRef}
+        ref={contentRef}
         as="section"
         position="relative"
         w="full"

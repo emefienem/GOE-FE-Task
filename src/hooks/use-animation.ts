@@ -1,42 +1,76 @@
 import gsap from "gsap";
 
-type AnimationType = "fade-in" | "rotate-in" | "fade";
+type AnimationType =
+  | "fade-in"
+  | "slide-left"
+  | "slide-right"
+  | "slide-up"
+  | "slide-down"
+  | "zoom-in"
+  | "rotate-in";
 
 const useAnimation = () => {
   return {
     animate: (name: AnimationType, options?: gsap.TweenVars) => {
+      const baseConfig = {
+        stagger: 0.05,
+        duration: 0.5,
+        ease: "power2.out",
+        ...options,
+      };
+
       switch (name) {
         case "fade-in":
           return {
-            y: 0,
-            stagger: 0.05,
-            duration: 0.1,
-            opacity: 1,
-            ...options,
+            opacity: 0,
+            y: 20,
+            ...baseConfig,
+          };
+
+        case "slide-left":
+          return {
+            x: 100,
+            opacity: 0,
+            ...baseConfig,
+          };
+
+        case "slide-right":
+          return {
+            x: -100,
+            opacity: 0,
+            ...baseConfig,
+          };
+
+        case "slide-up":
+          return {
+            y: 50,
+            opacity: 0,
+            ...baseConfig,
+          };
+
+        case "slide-down":
+          return {
+            y: -50,
+            opacity: 0,
+            ...baseConfig,
+          };
+
+        case "zoom-in":
+          return {
+            scale: 0.9,
+            opacity: 0,
+            ...baseConfig,
           };
 
         case "rotate-in":
           return {
-            rotate: 0,
-            stagger: 0.05,
-            delay: 0.8,
-            duration: 0.1,
-            opacity: 1,
-
-            ...options,
-          };
-
-        case "fade":
-          return {
-            opacity: 1,
-            stagger: 0.3,
-            duration: 0.3,
-            ...options,
+            rotate: -10,
+            opacity: 0,
+            ...baseConfig,
           };
 
         default:
-          // do nothing
-          return {};
+          return baseConfig;
       }
     },
   };

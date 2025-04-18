@@ -12,7 +12,8 @@ import gsap from "gsap";
 const HomeDiscoverSection = () => {
   const isMobile = useMediaQuery(MediaQueryBreakPoints.mobile);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef(null);
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const { animate } = useAnimation();
 
   const scroll = (direction: "left" | "right") => {
@@ -26,17 +27,27 @@ const HomeDiscoverSection = () => {
   };
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (el) {
-      gsap.fromTo(el, animate("fade-in", { opacity: 0, y: 50 }), {
-        ...animate("fade-in"),
-        scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
-    }
+    itemsRef.current.forEach((item, i) => {
+      if (item) {
+        const from = {
+          ...animate("slide-right", { opacity: 0 }),
+        };
+
+        const to = {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        };
+
+        gsap.fromTo(item, from, to);
+      }
+    });
   }, []);
 
   return (
@@ -69,12 +80,48 @@ const HomeDiscoverSection = () => {
           scrollbar-width: none;
         `}
       >
-        <NewPlace title="Red Sea" image="/red-sea.png" />
-        <NewPlace title="Soma Bay" image="/soma-bay.png" />
-        <NewPlace title="Giza" image="/giza.png" />
-        <NewPlace title="Nile" image="/nile.png" />
-        <NewPlace title="Nabq Bay" image="/nabq-bay.png" />
-        <NewPlace title="Other" image="/other.png" />
+        <NewPlace
+          title="Red Sea"
+          image="/red-sea.png"
+          ref={(el) => {
+            itemsRef.current[0] = el;
+          }}
+        />
+        <NewPlace
+          title="Soma Bay"
+          image="/soma-bay.png"
+          ref={(el) => {
+            itemsRef.current[1] = el;
+          }}
+        />
+        <NewPlace
+          title="Giza"
+          image="/giza.png"
+          ref={(el) => {
+            itemsRef.current[2] = el;
+          }}
+        />
+        <NewPlace
+          title="Nile"
+          image="/nile.png"
+          ref={(el) => {
+            itemsRef.current[3] = el;
+          }}
+        />
+        <NewPlace
+          title="Nabq Bay"
+          image="/nabq-bay.png"
+          ref={(el) => {
+            itemsRef.current[4] = el;
+          }}
+        />
+        <NewPlace
+          title="Other"
+          image="/other.png"
+          ref={(el) => {
+            itemsRef.current[5] = el;
+          }}
+        />
       </Flex>
 
       {!isMobile && (
