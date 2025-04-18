@@ -461,6 +461,7 @@ import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { BsCalendar2Date } from "react-icons/bs";
 import { MdOutlineHorizontalRule } from "react-icons/md";
 import { FiChevronDown, FiPlus, FiMinus } from "react-icons/fi";
+import Link from "next/link";
 
 const locations = [
   "Cairo, Egypt",
@@ -469,7 +470,7 @@ const locations = [
   "Luxor & Aswan",
 ];
 
-export default function Home() {
+export default function BookingBar() {
   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(
@@ -489,8 +490,15 @@ export default function Home() {
       year: "numeric",
     });
 
+  const formatLongDate = (date: Date) =>
+    date.toLocaleDateString(undefined, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
   return (
-    <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-full p-4 px-6 flex items-center justify-between max-w-[95%] sm:max-w-[90%] md:max-w-[container.lg] lg:max-w-[container.xl] mx-auto mt-8 md:mt-6 shadow-md gap-4 flex-col md:flex-row">
+    <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-full p-4 px-6 flex items-center justify-between max-w-[95%] sm:max-w-[90%] md:max-w-[1024px] lg:max-w-[1280px] mx-auto mt-8 md:mt-6 shadow-md gap-4 flex-col md:flex-row">
       {/* Small screen */}
       <div className="block md:hidden w-full">
         <div className="flex flex-wrap items-center justify-center gap-2">
@@ -498,15 +506,15 @@ export default function Home() {
           <div className="relative">
             <button
               onClick={() => setIsLocationOpen(!isLocationOpen)}
-              className="flex items-center text-white bg-transparent border-none cursor-pointer"
+              className="flex items-center gap-2 text-white font-medium text-sm"
             >
+              <FaMapMarkerAlt className="text-[#D2AC71]" />
+              <span>{selectedLocation}</span>
               <FiChevronDown
                 className={`transition-transform ${
                   isLocationOpen ? "rotate-180" : ""
                 }`}
               />
-              <FaMapMarkerAlt className="text-[#D2AC71] mr-2" />
-              <span>{selectedLocation}</span>
             </button>
             {isLocationOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
@@ -534,17 +542,17 @@ export default function Home() {
           <div className="relative">
             <button
               onClick={() => setIsDateOpen(!isDateOpen)}
-              className="flex items-center text-white bg-transparent border-none cursor-pointer"
+              className="flex items-center gap-2 text-white font-medium text-sm"
             >
+              <BsCalendar2Date className="text-[#D2AC71]" />
+              <span>
+                {formatDate(startDate)} - {formatDate(endDate)}
+              </span>
               <FiChevronDown
                 className={`transition-transform ${
                   isDateOpen ? "rotate-180" : ""
                 }`}
               />
-              <BsCalendar2Date className="text-[#D2AC71] mr-2" />
-              <span>
-                {formatDate(startDate)} - {formatDate(endDate)}
-              </span>
             </button>
             {isDateOpen && (
               <div className="absolute z-10 mt-2 w-[300px] bg-gray-700 rounded-md shadow-lg border border-gray-600">
@@ -580,22 +588,22 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-2 flex items-center justify-center">
+        <div className="mt-2 flex items-center justify-center gap-2">
           {/* Guests Popover */}
           <div className="relative">
             <button
               onClick={() => setIsGuestOpen(!isGuestOpen)}
-              className="flex items-center text-white bg-transparent border-none cursor-pointer"
+              className="flex items-center gap-2 text-white font-medium text-sm"
             >
+              <FaUser className="text-[#D2AC71]" />
+              <span>
+                {adults} Adults, {children} Children, {rooms} Rooms
+              </span>
               <FiChevronDown
                 className={`transition-transform ${
                   isGuestOpen ? "rotate-180" : ""
                 }`}
               />
-              <FaUser className="text-[#D2AC71] mr-2" />
-              <span>
-                {adults} Adults, {children} Children, {rooms} Rooms
-              </span>
             </button>
             {isGuestOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
@@ -629,9 +637,11 @@ export default function Home() {
           </div>
         </div>
 
-        <button className="bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 font-semibold w-full mt-3">
-          Explore Stays
-        </button>
+        <Link href="/egy-location" className="w-full mt-3">
+          <button className="bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 font-semibold w-full">
+            Explore Stays
+          </button>
+        </Link>
       </div>
 
       {/* Medium & Larger screens */}
@@ -641,15 +651,15 @@ export default function Home() {
           <div className="relative">
             <button
               onClick={() => setIsLocationOpen(!isLocationOpen)}
-              className="flex items-center text-white bg-transparent border-none cursor-pointer"
+              className="flex items-center gap-2 text-white font-medium"
             >
+              <FaMapMarkerAlt className="text-[#D2AC71]" />
+              <span>{selectedLocation}</span>
               <FiChevronDown
                 className={`transition-transform ${
                   isLocationOpen ? "rotate-180" : ""
                 }`}
               />
-              <FaMapMarkerAlt className="text-[#D2AC71] mr-2" />
-              <span>{selectedLocation}</span>
             </button>
             {isLocationOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
@@ -675,17 +685,17 @@ export default function Home() {
           <div className="relative">
             <button
               onClick={() => setIsDateOpen(!isDateOpen)}
-              className="flex items-center text-white bg-transparent border-none cursor-pointer"
+              className="flex items-center gap-2 text-white font-medium"
             >
+              <BsCalendar2Date className="text-[#D2AC71]" />
+              <span>
+                {formatLongDate(startDate)} - {formatLongDate(endDate)}
+              </span>
               <FiChevronDown
                 className={`transition-transform ${
                   isDateOpen ? "rotate-180" : ""
                 }`}
               />
-              <BsCalendar2Date className="text-[#D2AC71] mr-2" />
-              <span>
-                {formatDate(startDate)} - {formatDate(endDate)}
-              </span>
             </button>
             {isDateOpen && (
               <div className="absolute z-10 mt-2 w-[500px] bg-gray-700 rounded-md shadow-lg border border-gray-600">
@@ -724,17 +734,17 @@ export default function Home() {
           <div className="relative">
             <button
               onClick={() => setIsGuestOpen(!isGuestOpen)}
-              className="flex items-center text-white bg-transparent border-none cursor-pointer"
+              className="flex items-center gap-2 text-white font-medium"
             >
+              <FaUser className="text-[#D2AC71]" />
+              <span>
+                {adults} Adults, {children} Children, {rooms} Rooms
+              </span>
               <FiChevronDown
                 className={`transition-transform ${
                   isGuestOpen ? "rotate-180" : ""
                 }`}
               />
-              <FaUser className="text-[#D2AC71] mr-2" />
-              <span>
-                {adults} Adults, {children} Children, {rooms} Rooms
-              </span>
             </button>
             {isGuestOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
@@ -768,9 +778,11 @@ export default function Home() {
           </div>
         </div>
 
-        <button className="bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 font-semibold md:ml-3 lg:ml-6">
-          Explore Stays
-        </button>
+        <Link href="/egy-location">
+          <button className="bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 font-semibold md:ml-3 lg:ml-6">
+            Explore Stays
+          </button>
+        </Link>
       </div>
     </div>
   );
