@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { DateRange } from "react-date-range";
+import { DateRange, RangeKeyDict } from "react-date-range";
+import { Range } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
@@ -14,7 +15,7 @@ export default function CalendarPopover({
   setStartDate: (date: Date) => void;
   setEndDate: (date: Date) => void;
 }) {
-  const [range, setRange] = useState([
+  const [range, setRange] = useState<Range[]>([
     {
       startDate,
       endDate,
@@ -22,10 +23,13 @@ export default function CalendarPopover({
     },
   ]);
 
-  const handleSelect = (ranges: any) => {
-    setStartDate(ranges.selection.startDate);
-    setEndDate(ranges.selection.endDate);
-    setRange([ranges.selection]);
+  const handleSelect = (ranges: RangeKeyDict) => {
+    const selection = ranges.selection;
+    if (selection.startDate && selection.endDate) {
+      setStartDate(selection.startDate);
+      setEndDate(selection.endDate);
+      setRange([selection]);
+    }
   };
 
   return (
