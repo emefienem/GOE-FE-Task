@@ -455,13 +455,16 @@
 //   );
 // }
 
+// components/BookingBar.tsx
 "use client";
 import { useState } from "react";
 import { FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { BsCalendar2Date } from "react-icons/bs";
 import { MdOutlineHorizontalRule } from "react-icons/md";
-import { FiChevronDown, FiPlus, FiMinus } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import Link from "next/link";
+import CalendarPopover from "@/widgets/pages/location/calendar-popover";
+import GuestPopover from "@/widgets/pages/location/guest-popover";
 
 const locations = [
   "Cairo, Egypt",
@@ -474,7 +477,7 @@ export default function BookingBar() {
   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(
-    new Date(Date.now() + 8 * 24 * 3600000)
+    new Date(Date.now() + 8 * 24 * 3600_000)
   );
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(1);
@@ -483,30 +486,39 @@ export default function BookingBar() {
   const [isGuestOpen, setIsGuestOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
-  const formatDate = (date: Date) =>
-    date.toLocaleDateString(undefined, {
+  const formatDate = (d: Date) =>
+    d.toLocaleDateString(undefined, {
       day: "numeric",
       month: "short",
       year: "numeric",
     });
-
-  const formatLongDate = (date: Date) =>
-    date.toLocaleDateString(undefined, {
+  const formatLongDate = (d: Date) =>
+    d.toLocaleDateString(undefined, {
       day: "numeric",
       month: "long",
       year: "numeric",
     });
 
   return (
-    <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-full p-4 px-6 flex items-center justify-between max-w-[95%] sm:max-w-[90%] md:max-w-[1024px] lg:max-w-[1280px] mx-auto mt-8 md:mt-6 shadow-md gap-4 flex-col md:flex-row">
-      {/* Small screen */}
+    <div
+      className="
+        bg-white bg-opacity-10 backdrop-blur-md
+        rounded-full p-4 px-6
+        flex flex-col md:flex-row items-center justify-between
+        gap-4
+        max-w-[95%] sm:max-w-[90%] md:max-w-screen-lg lg:max-w-screen-xl
+        mx-auto mt-8 md:mt-6
+        shadow-md
+      "
+    >
+      {/* Small screens */}
       <div className="block md:hidden w-full">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          {/* Location Popover */}
+          {/* Location */}
           <div className="relative">
             <button
               onClick={() => setIsLocationOpen(!isLocationOpen)}
-              className="flex items-center gap-2 text-white font-medium text-sm"
+              className="flex items-center gap-2 text-white/90 font-medium text-sm"
             >
               <FaMapMarkerAlt className="text-[#D2AC71]" />
               <span>{selectedLocation}</span>
@@ -518,35 +530,33 @@ export default function BookingBar() {
             </button>
             {isLocationOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
-                <div className="py-1">
-                  {locations.map((loc) => (
-                    <div
-                      key={loc}
-                      className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
-                      onClick={() => {
-                        setSelectedLocation(loc);
-                        setIsLocationOpen(false);
-                      }}
-                    >
-                      <p className="text-white">{loc}</p>
-                    </div>
-                  ))}
-                </div>
+                {locations.map((loc) => (
+                  <div
+                    key={loc}
+                    className="px-4 py-2 text-white hover:bg-gray-600 cursor-pointer"
+                    onClick={() => {
+                      setSelectedLocation(loc);
+                      setIsLocationOpen(false);
+                    }}
+                  >
+                    {loc}
+                  </div>
+                ))}
               </div>
             )}
           </div>
 
-          <MdOutlineHorizontalRule className="text-white opacity-70" />
+          <MdOutlineHorizontalRule className="text-white/70" />
 
-          {/* Date Popover */}
+          {/* Date */}
           <div className="relative">
             <button
               onClick={() => setIsDateOpen(!isDateOpen)}
-              className="flex items-center gap-2 text-white font-medium text-sm"
+              className="flex items-center gap-2 text-white/90 font-medium text-sm"
             >
               <BsCalendar2Date className="text-[#D2AC71]" />
               <span>
-                {formatDate(startDate)} - {formatDate(endDate)}
+                {formatDate(startDate)} – {formatDate(endDate)}
               </span>
               <FiChevronDown
                 className={`transition-transform ${
@@ -556,44 +566,23 @@ export default function BookingBar() {
             </button>
             {isDateOpen && (
               <div className="absolute z-10 mt-2 w-[300px] bg-gray-700 rounded-md shadow-lg border border-gray-600">
-                <div className="px-4 py-2 border-b border-gray-600">
-                  <p className="text-white">Select dates</p>
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between">
-                    <Calendar
-                      monthOffset={0}
-                      selectRange={{
-                        startDate,
-                        endDate,
-                        setStartDate,
-                        setEndDate,
-                      }}
-                      onClose={() => setIsDateOpen(false)}
-                    />
-                    <Calendar
-                      monthOffset={1}
-                      selectRange={{
-                        startDate,
-                        endDate,
-                        setStartDate,
-                        setEndDate,
-                      }}
-                      onClose={() => setIsDateOpen(false)}
-                    />
-                  </div>
-                </div>
+                <CalendarPopover
+                  startDate={startDate}
+                  endDate={endDate}
+                  setStartDate={setStartDate}
+                  setEndDate={setEndDate}
+                />
               </div>
             )}
           </div>
         </div>
 
         <div className="mt-2 flex items-center justify-center gap-2">
-          {/* Guests Popover */}
+          {/* Guests */}
           <div className="relative">
             <button
               onClick={() => setIsGuestOpen(!isGuestOpen)}
-              className="flex items-center gap-2 text-white font-medium text-sm"
+              className="flex items-center gap-2 text-white/90 font-medium text-sm"
             >
               <FaUser className="text-[#D2AC71]" />
               <span>
@@ -607,51 +596,34 @@ export default function BookingBar() {
             </button>
             {isGuestOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
-                <div className="px-4 py-2 border-b border-gray-600">
-                  <p className="text-white">Guests & Rooms</p>
-                </div>
-                <div className="p-4">
-                  <div className="space-y-3">
-                    <CountControl
-                      label="Adults"
-                      value={adults}
-                      onChange={setAdults}
-                      min={0}
-                    />
-                    <CountControl
-                      label="Children"
-                      value={children}
-                      onChange={setChildren}
-                      min={0}
-                    />
-                    <CountControl
-                      label="Rooms"
-                      value={rooms}
-                      onChange={setRooms}
-                      min={1}
-                    />
-                  </div>
-                </div>
+                <GuestPopover
+                  adults={adults}
+                  children={children}
+                  rooms={rooms}
+                  setAdults={setAdults}
+                  setChildren={setChildren}
+                  setRooms={setRooms}
+                />
               </div>
             )}
           </div>
         </div>
 
-        <Link href="/egy-location" className="w-full mt-3">
-          <button className="bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 font-semibold w-full">
+        <Link href="/egy-location" className="block w-full mt-3">
+          <button className="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-full font-semibold">
             Explore Stays
           </button>
         </Link>
       </div>
 
-      {/* Medium & Larger screens */}
+      {/* Medium & up */}
       <div className="hidden md:flex flex-1 w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Location */}
           <div className="relative">
             <button
               onClick={() => setIsLocationOpen(!isLocationOpen)}
-              className="flex items-center gap-2 text-white font-medium"
+              className="flex items-center gap-2 text-white/90 font-medium"
             >
               <FaMapMarkerAlt className="text-[#D2AC71]" />
               <span>{selectedLocation}</span>
@@ -663,20 +635,18 @@ export default function BookingBar() {
             </button>
             {isLocationOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
-                <div className="py-1">
-                  {locations.map((loc) => (
-                    <div
-                      key={loc}
-                      className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
-                      onClick={() => {
-                        setSelectedLocation(loc);
-                        setIsLocationOpen(false);
-                      }}
-                    >
-                      <p className="text-white">{loc}</p>
-                    </div>
-                  ))}
-                </div>
+                {locations.map((loc) => (
+                  <div
+                    key={loc}
+                    className="px-4 py-2 text-white hover:bg-gray-600 cursor-pointer"
+                    onClick={() => {
+                      setSelectedLocation(loc);
+                      setIsLocationOpen(false);
+                    }}
+                  >
+                    {loc}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -685,11 +655,11 @@ export default function BookingBar() {
           <div className="relative">
             <button
               onClick={() => setIsDateOpen(!isDateOpen)}
-              className="flex items-center gap-2 text-white font-medium"
+              className="flex items-center gap-2 text-white/90 font-medium"
             >
               <BsCalendar2Date className="text-[#D2AC71]" />
               <span>
-                {formatLongDate(startDate)} - {formatLongDate(endDate)}
+                {formatLongDate(startDate)} – {formatLongDate(endDate)}
               </span>
               <FiChevronDown
                 className={`transition-transform ${
@@ -699,33 +669,12 @@ export default function BookingBar() {
             </button>
             {isDateOpen && (
               <div className="absolute z-10 mt-2 w-[500px] bg-gray-700 rounded-md shadow-lg border border-gray-600">
-                <div className="px-4 py-2 border-b border-gray-600">
-                  <p className="text-white">Select dates</p>
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between">
-                    <Calendar
-                      monthOffset={0}
-                      selectRange={{
-                        startDate,
-                        endDate,
-                        setStartDate,
-                        setEndDate,
-                      }}
-                      onClose={() => setIsDateOpen(false)}
-                    />
-                    <Calendar
-                      monthOffset={1}
-                      selectRange={{
-                        startDate,
-                        endDate,
-                        setStartDate,
-                        setEndDate,
-                      }}
-                      onClose={() => setIsDateOpen(false)}
-                    />
-                  </div>
-                </div>
+                <CalendarPopover
+                  startDate={startDate}
+                  endDate={endDate}
+                  setStartDate={setStartDate}
+                  setEndDate={setEndDate}
+                />
               </div>
             )}
           </div>
@@ -734,7 +683,7 @@ export default function BookingBar() {
           <div className="relative">
             <button
               onClick={() => setIsGuestOpen(!isGuestOpen)}
-              className="flex items-center gap-2 text-white font-medium"
+              className="flex items-center gap-2 text-white/90 font-medium"
             >
               <FaUser className="text-[#D2AC71]" />
               <span>
@@ -748,137 +697,24 @@ export default function BookingBar() {
             </button>
             {isGuestOpen && (
               <div className="absolute z-10 mt-2 w-56 bg-gray-700 rounded-md shadow-lg border border-gray-600">
-                <div className="px-4 py-2 border-b border-gray-600">
-                  <p className="text-white">Guests & Rooms</p>
-                </div>
-                <div className="p-4">
-                  <div className="space-y-3">
-                    <CountControl
-                      label="Adults"
-                      value={adults}
-                      onChange={setAdults}
-                      min={0}
-                    />
-                    <CountControl
-                      label="Children"
-                      value={children}
-                      onChange={setChildren}
-                      min={0}
-                    />
-                    <CountControl
-                      label="Rooms"
-                      value={rooms}
-                      onChange={setRooms}
-                      min={1}
-                    />
-                  </div>
-                </div>
+                <GuestPopover
+                  adults={adults}
+                  children={children}
+                  rooms={rooms}
+                  setAdults={setAdults}
+                  setChildren={setChildren}
+                  setRooms={setRooms}
+                />
               </div>
             )}
           </div>
         </div>
 
         <Link href="/egy-location">
-          <button className="bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 font-semibold md:ml-3 lg:ml-6">
+          <button className="ml-3 lg:ml-6 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-full font-semibold">
             Explore Stays
           </button>
         </Link>
-      </div>
-    </div>
-  );
-}
-
-function CountControl({
-  label,
-  value,
-  onChange,
-  min = 0,
-}: {
-  label: string;
-  value: number;
-  onChange: (v: number) => void;
-  min?: number;
-}) {
-  return (
-    <div className="flex justify-between items-center w-full">
-      <p className="text-white">{label}</p>
-      <div className="flex items-center gap-2">
-        <button
-          className="text-white p-1 rounded hover:bg-gray-600"
-          onClick={() => onChange(Math.max(min, value - 1))}
-        >
-          <FiMinus />
-        </button>
-        <p className="text-white w-6 text-center">{value}</p>
-        <button
-          className="text-white p-1 rounded hover:bg-gray-600"
-          onClick={() => onChange(value + 1)}
-        >
-          <FiPlus />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function Calendar({
-  monthOffset,
-  selectRange,
-  onClose,
-}: {
-  monthOffset: 0 | 1;
-  selectRange: {
-    startDate: Date;
-    endDate: Date;
-    setStartDate: (d: Date) => void;
-    setEndDate: (d: Date) => void;
-  };
-  onClose?: () => void;
-}) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + monthOffset;
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  const cells = [] as React.ReactNode[];
-  for (let i = 0; i < firstDay; i++) cells.push(<div key={`empty-${i}`} />);
-  for (let d = 1; d <= daysInMonth; d++) {
-    const date = new Date(year, month, d);
-    const isSelected =
-      date >= selectRange.startDate && date <= selectRange.endDate;
-    cells.push(
-      <div
-        key={d}
-        className={`h-8 w-8 leading-8 text-center rounded-md cursor-pointer ${
-          isSelected ? "bg-green-500 text-white" : "bg-gray-600 text-gray-300"
-        }`}
-        onClick={() => {
-          if (date < selectRange.startDate) selectRange.setStartDate(date);
-          else selectRange.setEndDate(date);
-          onClose?.();
-        }}
-      >
-        {d}
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-2">
-      <p className="font-bold text-white">
-        {new Date(year, month).toLocaleString(undefined, {
-          month: "long",
-          year: "numeric",
-        })}
-      </p>
-      <div className="grid grid-cols-7 gap-1">
-        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
-          <p key={d} className="text-center text-xs text-gray-300">
-            {d}
-          </p>
-        ))}
-        {cells}
       </div>
     </div>
   );
