@@ -16,17 +16,17 @@ import gsap from "gsap";
 import { destinations } from "@/hooks/data";
 
 const HomeTrendingSection = () => {
-  const rightRef = useRef(null);
+  const sectionRef = useRef(null);
   const { animate } = useAnimation();
-
   useEffect(() => {
-    if (rightRef.current) {
-      gsap.fromTo(rightRef.current, animate("slide-right", { opacity: 0 }), {
-        x: 0,
-        opacity: 1,
+    const el = sectionRef.current;
+    if (el) {
+      gsap.fromTo(el, animate("fade-in", { opacity: 0, y: 50 }), {
+        ...animate("fade-in"),
         scrollTrigger: {
-          trigger: rightRef.current,
+          trigger: el,
           start: "top 80%",
+          toggleActions: "play none none none",
         },
       });
     }
@@ -38,7 +38,7 @@ const HomeTrendingSection = () => {
       px={{ base: 5, md: 20 }}
       bg="black"
       color="white"
-      ref={rightRef}
+      ref={sectionRef}
     >
       <Heading
         color="white"

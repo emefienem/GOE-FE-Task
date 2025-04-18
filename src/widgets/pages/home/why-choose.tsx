@@ -8,26 +8,21 @@ import gsap from "gsap";
 
 const HomeWhyChooseSection = () => {
   const sectionRef = useRef(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const { animate } = useAnimation();
 
   useEffect(() => {
-    if (cardsRef.current.length) {
-      cardsRef.current.forEach((card, i) => {
-        if (card) {
-          gsap.fromTo(card, animate("zoom-in", { opacity: 0 }), {
-            scale: 1,
-            opacity: 1,
-            delay: i * 0.1,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 80%",
-            },
-          });
-        }
+    const el = sectionRef.current;
+    if (el) {
+      gsap.fromTo(el, animate("fade-in", { opacity: 0, y: 50 }), {
+        ...animate("fade-in"),
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
       });
     }
-  }, []);
+  }, [animate]);
 
   return (
     <Box px={{ base: 5, md: 20 }} py={5} bg="black" ref={sectionRef}>
@@ -73,9 +68,6 @@ const HomeWhyChooseSection = () => {
                 </Text>
               </>
             }
-            ref={(el) => {
-              cardsRef.current[0] = el;
-            }}
             description="Quick, user-friendly platform that simplifies the reservation process."
             imageSrc="/why-seamless.png"
             imageAlt="Seamless & Smart Booking"
@@ -92,9 +84,6 @@ const HomeWhyChooseSection = () => {
                 </Text>
               </>
             }
-            ref={(el) => {
-              cardsRef.current[1] = el;
-            }}
             description="Explore hotels and rooms in 360 before you book—giving you total confidence."
             imageSrc="/why-vr.png"
             imageAlt="Immersive VR Preview"
@@ -111,9 +100,6 @@ const HomeWhyChooseSection = () => {
                 </Text>
               </>
             }
-            ref={(el) => {
-              cardsRef.current[2] = el;
-            }}
             description="Save more with special offers and real-time price comparisons."
             imageSrc="/why-exclusive.png"
             imageAlt="Exclusive Best-Price"
